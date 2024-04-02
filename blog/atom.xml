@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://fastschema.com/blog</id>
+    <title>Fastschema Blog</title>
+    <updated>2024-04-02T15:02:13.341Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://fastschema.com/blog"/>
+    <subtitle>Fastschema Blog</subtitle>
+    <icon>https://fastschema.com/img/icon.png</icon>
+    <entry>
+        <title type="html"><![CDATA[Blog]]></title>
+        <id>https://fastschema.com/blog/index</id>
+        <link href="https://fastschema.com/blog/index"/>
+        <updated>2024-04-02T15:02:13.341Z</updated>
+    </entry>
+</feed>
