@@ -12,12 +12,12 @@ FastSchema, a Headless CMS written in Go, offers two straightforward methods for
 
 - Navigate to the FastSchema [GitHub Releases page](https://github.com/fastschema/fastschema/releases).
 - Select the latest release.
-- Download the appropriate binary for your operating system (e.g., Linux, macOS, Windows).
+- Download the appropriate binary for your operating system (e.g., Linux, macOS, Windows). Fo example: fastschema_0.0.1_linux_amd64.zip
 
 ### 2. Extract the Binary:
 
 ```bash
-unzip fastschema-v0.0.1-linux-amd64.zip
+unzip fastschema_0.0.1_linux_amd64.zip
 ```
 
 ### 3. Run the Binary:
@@ -26,7 +26,7 @@ unzip fastschema-v0.0.1-linux-amd64.zip
 - Navigate to the directory containing the downloaded binary.
 - Run the following command:
   ```bash
-  ./fastschema run
+  ./fastschema start
   ```
 
 Now you can access to the FastSchema setup page by visiting [http://localhost:3000/setup?token=\{token\}](http://localhost:3000?token=\{token\}) (The setup token is displayed in the terminal).
