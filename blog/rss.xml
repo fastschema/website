@@ -4,7 +4,7 @@
         <title>Fastschema Blog</title>
         <link>https://fastschema.com/blog</link>
         <description>Fastschema Blog</description>
-        <lastBuildDate>Tue, 02 Apr 2024 15:02:13 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 03 Apr 2024 03:35:09 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -12,7 +12,7 @@
             <title><![CDATA[Blog]]></title>
             <link>https://fastschema.com/blog/index</link>
             <guid>https://fastschema.com/blog/index</guid>
-            <pubDate>Tue, 02 Apr 2024 15:02:13 GMT</pubDate>
+            <pubDate>Wed, 03 Apr 2024 03:35:09 GMT</pubDate>
         </item>
     </channel>
 </rss>
