@@ -8,7 +8,7 @@ const FeatureList = [
     Svg: require('@site/static/img/database.svg').default,
     description: (
       <>
-        With a defined schema, FastSchema automatically generates the necessary database tables, eliminating the need for manual setup.
+        Supports a variety of database, including Postgresql, MySQL, SQLite and automatically generates the DB tables.
       </>
     ),
   },
@@ -17,7 +17,7 @@ const FeatureList = [
     Svg: require('@site/static/img/api.svg').default,
     description: (
       <>
-        FastSchema creates CRUD APIs based on the schema, enabling seamless interaction with your content.
+        Automatically creates CRUD APIs with flexible filter based on the schema, enabling seamless interaction with your content.
       </>
     ),
   },
@@ -30,11 +30,32 @@ const FeatureList = [
       </>
     ),
   },
+  {
+    title: 'Built-in File Management',
+    Svg: require('@site/static/img/file.svg').default,
+    description: (
+      <>Fastschema allowing you to upload and serve files directly from your application with many drivers like local, s3, etc.</>
+    )
+  },
+  {
+    title: 'Built-in Admin Control Panel',
+    Svg: require('@site/static/img/dashboard.svg').default,
+    description: (
+      <>Built-in admin control panel provide an intuitive interface for managing your data: CRUD operations, search, filter, and more.</>
+    )
+  },
+  {
+    title: 'Role-Based Access Control',
+    Svg: require('@site/static/img/role.svg').default,
+    description: (
+      <>Fastschema includes RBAC features, allowing you to define granular permissions for different user roles, ensuring that your data is secure.</>
+    )
+  },
 ];
 
 function Feature({Svg, title, description}) {
   return (
-    <div className={clsx('col col--4 cms-feature')}>
+    <div className={clsx(styles.cmsFeature, 'col col--4')}>
       <div className="text--center">
         <Svg className={styles.featureSvg} role="img" />
       </div>
@@ -50,7 +71,7 @@ export default function HomepageFeatures() {
   return (
     <section className={styles.features}>
       <div className="container">
-        <div className="row">
+        <div className={clsx(styles.featureContainer, 'row')}>
           {FeatureList.map((props, idx) => (
             <Feature key={idx} {...props} />
           ))}

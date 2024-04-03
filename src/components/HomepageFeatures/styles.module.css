@@ -2,12 +2,22 @@
   display: flex;
   align-items: center;
   padding: 2rem 0;
+  gap: 3rem;
   width: 100%;
 }
 
+.featureContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.cmsFeature {
+  margin-bottom: 5rem;
+}
+
 .featureSvg {
-  height: 120px;
-  width: 120px;
+  height: 80px;
+  width: 80px;
   stroke: rgba(60, 60, 67);
   margin-bottom: 1rem;
 }

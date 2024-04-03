@@ -21,15 +21,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-  }
-  svg {
-    width: 20px;
-    height: 20px;
-  }
+}
+
+.buttons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.buttons svg {
+  width: 20px;
+  height: 20px;
 }
