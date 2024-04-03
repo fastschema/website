@@ -143,6 +143,7 @@ This query type allows users to retrieve resources while applying filters based 
     ]
 }
 
+
 ```
 
 ### Query with relations Filter
