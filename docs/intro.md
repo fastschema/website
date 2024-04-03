@@ -13,7 +13,7 @@ At the core of FastSchema lies its schema definition, a blueprint that outlines 
 
 ## Features
 
-Fastschema offers a comprehensive suite of features designed to streamline and simplify the process of building and managing dynamic web applications. Whether you're a developer, designer, or content creator, our platform provides the tools you need to create, deploy, and maintain powerful web experiences with ease.
+Fastschema offers a comprehensive suite of features designed to streamline and simplify the process of building and managing dynamic web applications. Whether you're a developer, designer, or content creator, Fastschema provides the tools you need to create, deploy, and maintain powerful web experiences with ease.
 
 - Automated Database Generation.
 - RESTful API Generation.
