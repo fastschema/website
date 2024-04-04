@@ -39,12 +39,19 @@ Now you can access to the FastSchema setup page by visiting [http://localhost:30
 git clone https://github.com/fastschema/fastschema.git
 cd fastschema
 git submodule update --init --recursive
+```
+
+You will alose need to create an environment file `./pkg/dash/.env.production` for the dashboard. Please look at the example file `./pkg/dash/.env.example` for reference.
+
+### 2. Build the Dashboard:
+
+```bash
 cd pkg/dash
 yarn install && yarn build
 cd ../../ && mkdir -p private/tmp
 ```
 
-### 2. Build the Binary:
+### 3. Build the Binary:
 
 ```bash
 go build -o fastschema default/main.go

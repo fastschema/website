@@ -58,10 +58,7 @@ newApp.OnAfterDBContentList(func(query *db.QueryOptions, entities []*schema.Enti
 	}
 
 	for _, entity := range entities {
-		path := entity.GetString("path")
-		if path != "" {
-			entity.Set("url", newApp.Disk().URL(entity.GetString("path")))
-		}
+		entity.Set("custom", true)
 	}
 
 	return entities, nil
@@ -93,19 +90,17 @@ func main() {
 		}, app.Meta{app.GET: ""}),
 	)
 
-	newApp.OnAfterDBContentList(
-		func(query *db.QueryOptions, entities []*schema.Entity) ([]*schema.Entity, error) {
-			if query.Model.Schema().Name != "media" {
-				return entities, nil
-			}
-
-			for _, entity := range entities {
-				entity.Set("custom", true)
-			}
-
+	newApp.OnAfterDBContentList(func(query *db.QueryOptions, entities []*schema.Entity) ([]*schema.Entity, error) {
+		if query.Model.Schema().Name != "media" {
 			return entities, nil
-		},
-	)
+		}
+
+		for _, entity := range entities {
+			entity.Set("custom", true)
+		}
+
+		return entities, nil
+	})
 
 	newApp.Start()
 }
