@@ -141,7 +141,7 @@ The update payload can include various operations such as setting fields, updati
 
 When filtering $neq operation in a relation field, the relation is not filtered properly. For example:
 ```json
-http://localhost:3000/api/content/category?select=id&filter={"tags.id":{"$neq":10001}}
+http://localhost:8000/api/content/category?select=id&filter={"tags.id":{"$neq":10001}}
 ```
 The above query will perform the following SQL query:
 ```sql
