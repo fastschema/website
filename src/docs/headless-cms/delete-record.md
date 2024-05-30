@@ -5,7 +5,7 @@ The delete record API endpoint allows you to delete a record from a schema. To d
 **Example**
 
 ```http
-DELETE /api/content/posts/1
+DELETE /api/content/post/1
 ```
 
 The `DELETE` request deletes the record with the ID `1` from the `posts` schema.

@@ -81,6 +81,7 @@ type Category struct {
   ]
 }
 ```
+:::
 
 ### Customize with tag `fs.enums`
 

@@ -13,7 +13,7 @@ To paginate the records, you can use the `limit` and `page` query parameters. Th
 **Example**
 
 ```http
-GET /api/content/posts/?filter={"name":{"$like":"%aaa%"}}&limit=2&page=2
+GET /api/content/?filter={"name":{"$like":"%aaa%"}}&limit=2&page=2
 ```
 
 ::: details Example response
@@ -54,7 +54,7 @@ The count API allows users to retrieve the total count of resources that match s
 **Example**
 
 ```http
-GET /api/content/posts/?filter={"name":{"$like":"%aaa%"}}
+GET /api/content/post/?filter={"name":{"$like":"%aaa%"}}
 ```
 
 ::: tip Note
@@ -68,7 +68,7 @@ The `select` query parameter allows you to specify which fields to include in th
 **Example**
 
 ```http
-GET /api/content/posts/?select=id,name,categories.name
+GET /api/content/post/?select=id,name,categories.name
 ```
 
 ::: details Example response
@@ -115,8 +115,8 @@ The `sort` query parameter allows you to specify the sorting order of the record
 
 The `sort` parameter accepts a string containing the field name and the sorting direction. By default, the sorting direction is ascending. You can change the sorting direction by adding a prefix (`-` for descending, `+` for ascending).
 
-- **Ascending**: `GET /api/content/posts/?sort=name`
-- **Descending**: `GET /api/content/posts/?sort=-name`
+- **Ascending**: `GET /api/content/post/?sort=name`
+- **Descending**: `GET /api/content/post/?sort=-name`
 
 ## Filter
 
@@ -127,7 +127,7 @@ The `filter` parameter accepts an object containing the filter criteria based on
 **Example**
 
 ```http
-GET /api/content/posts/?filter={"name":{"$like":"%post01%"},"categories.name":{"$like":"%category01%"}}
+GET /api/content/post/?filter={"name":{"$like":"%post01%"},"categories.name":{"$like":"%category01%"}}
 ```
 
 ### Simple filter object
