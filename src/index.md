@@ -1,5 +1,6 @@
 ---
 layout: home
+title: FastSchema - A Go web framework and Headless CMS
 
 hero:
   name: "FastSchema"

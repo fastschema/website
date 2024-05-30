@@ -7,6 +7,18 @@ export default defineConfig({
   title: "FastSchema",
   description: "A web framework and headless CMS written in Go",
   ignoreDeadLinks: true,
+  head: [
+    ['link', {
+      rel: 'icon',
+      type:'image/svg+xml',
+      href: '/fastschema-logo-small.svg'
+    }],
+    ['link', {
+      rel: 'icon',
+      type:'image/png',
+      href: '/fastschema-logo-small.png'
+    }],
+  ],
   markdown: {
     config(md) {
       md.use(tabsMarkdownPlugin)

@@ -45,7 +45,7 @@ meta := &fs.Meta{
 
 :::
 
-## details Prefix
+## Prefix
 
 Specify the prefix that the resource should be registered under.
 
