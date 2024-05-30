@@ -1,6 +1,5 @@
 {
-  "name": "website2",
-  "packageManager": "yarn@4.2.2",
+  "name": "website",
   "scripts": {
     "dev": "vitepress dev --port 3001",
     "build": "vitepress build",
