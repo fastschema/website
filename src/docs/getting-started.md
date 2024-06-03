@@ -79,7 +79,7 @@ _The setup token `{token}` is displayed in the terminal._
    git submodule update --init --recursive
    ```
 
-2. **Build the Dashboard:**
+2. **Build the Dashboard:** (Optional)
 
    ```bash
    cd pkg/dash
@@ -103,6 +103,16 @@ _The setup token `{token}` is displayed in the terminal._
    ```bash
    make dev
    ```
+
+   ::: warning
+   FastSchema requires Go 1.18 or later to build.
+
+   `make dev` command uses `air` to watch for changes and automatically rebuild the binary
+
+   You can install `air` by running `go install github.com/cosmtrek/air@latest`.
+
+   For more information, refer to the [Air](https://github.com/cosmtrek/air) repository.
+   :::
 
 ## Setup
 

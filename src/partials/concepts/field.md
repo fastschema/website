@@ -96,8 +96,20 @@ A boolean value that determines whether the field is optional. If the relationsh
 
 ::: details is_system_field
 
-A boolean value that determines whether the field is a system field. A system field is a field that was created from a Go struct property. A system field can only be extended and cannot be deleted.
+A boolean value that determines whether the field is a system field.
 
+A system field is a field that was created from Go code.
+
+A field that was created by user from the Admin or JSON file is not a system field.
+
+A system field can only be extended and cannot be deleted.
+:::
+
+::: details is_locked
+
+A boolean value that determines whether the field is locked.
+
+A locked field cannot be modified through the API and can only be modified by the Go code.
 :::
 
 ::: details renderer
