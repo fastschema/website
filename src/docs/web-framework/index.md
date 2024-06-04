@@ -63,3 +63,56 @@ func main() {
   app.Start()
 }
 ```
+
+## Some examples
+
+### Create a public resource
+
+By default, all resources require authentication. To create a public resource, you can set the `Public` field to `true` in the resource Metadata:
+
+```go
+app.AddResource(fs.Get("/", func(c fs.Context, _ any) (string, error) {
+  return "Hello World", nil
+}, &fs.Meta{Public: true}))
+```
+
+### Response html
+
+```go
+// Add a resource that will be served at /about
+app.AddResource(fs.Get("/about", func(c fs.Context, _ any) (any, error) {
+  header := make(http.Header)
+  header.Set("Content-Type", "text/html")
+
+  return &fs.HTTPResponse{
+    StatusCode: http.StatusOK,
+    Header:     header,
+    Body: []byte(`<!DOCTYPE html><html>
+      <head><title>About</title></head>
+      <body><h1>About</h1></p></body>
+    </html>`),
+  }, nil
+}, &fs.Meta{Public: true}))
+```
+
+### Add a resource to the `API` group
+
+To add a resource to the `API` group, you can use the `API` method on the `App` object:
+
+```go
+app.API().Add(fs.Get("/hello", func(c fs.Context, _ any) (any, error) {
+  return fs.Map{"message": "Hello, World!"}, nil
+}))
+```
+
+### Create a group of resources
+
+You can create a group of resources by using the `Group` method on the `Resources` object:
+
+```go
+app.Resources().
+  Group("docs", &fs.Meta{Prefix: "/docs"}).
+  Add(fs.Get("/getting-started", func(c fs.Context, _ any) (any, error) {
+    return fs.Map{"message": "Getting started with Fastschema"}, nil
+  }, public))
+```

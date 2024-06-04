@@ -44,3 +44,35 @@ FastSchema will only parse the request payload if the `Content-Type` header is s
 
 If FastSchema cannot parse the payload into the `Input` struct, it will return an error and the handler will not be called.
 :::
+
+## Output
+
+The handler function should return an `Output` and an error. The `Output` value will be serialized as JSON and sent back to the client.
+
+The `Output` can be any type, including a primitive type, a struct, etc.
+
+### Send HTML response
+
+```go
+resource := fs.Get("/about", func(c fs.Context, _ any) (string, error) {
+	header := make(http.Header)
+	header.Set("Content-Type", "text/html")
+
+	return &fs.HTTPResponse{
+		StatusCode: http.StatusOK,
+		Header:     header,
+		Body: []byte(`
+			<!DOCTYPE html>
+			<html>
+			<head>
+				<title>About</title>
+			</head>
+			<body>
+				<h1>About</h1>
+				<p>This is the about page.</p>
+			</body>
+			</html>
+		`),
+	}, nil
+})
+```
