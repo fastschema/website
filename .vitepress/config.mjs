@@ -5,17 +5,18 @@ export default defineConfig({
   srcDir: './src',
   outDir: './build',
   title: "FastSchema",
+  titleTemplate: ":title - FastSchema",
   description: "A web framework and headless CMS written in Go",
   ignoreDeadLinks: true,
   head: [
     ['link', {
       rel: 'icon',
-      type:'image/svg+xml',
+      type: 'image/svg+xml',
       href: '/fastschema-logo-small.svg'
     }],
     ['link', {
       rel: 'icon',
-      type:'image/png',
+      type: 'image/png',
       href: '/fastschema-logo-small.png'
     }],
   ],
@@ -88,6 +89,7 @@ export default defineConfig({
                 { text: 'System Schema', link: '/docs/web-framework/database/system-schema' },
                 { text: 'Query', link: '/docs/web-framework/database/query' },
                 { text: 'Mutation', link: '/docs/web-framework/database/mutation' },
+                { text: 'Relations', link: '/docs/web-framework/database/relations' },
                 { text: 'Raw SQL', link: '/docs/web-framework/database/raw-sql' },
                 { text: 'Migrations', link: '/docs/web-framework/database/migrations' },
               ],

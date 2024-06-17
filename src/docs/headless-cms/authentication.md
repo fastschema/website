@@ -103,3 +103,70 @@ The token will be expired after a certain time. The server will return `401 Unau
 
 If the `jwt token` is valid, but the user does not have permission to access the resource, the server will return `403 Forbidden`.
 :::
+
+## Auth Provider
+
+Besides the built-in authentication, you can also use the third-party authentication providers such as Google, Facebook, GitHub, etc.
+
+You can enable the third-party authentication by setting the environment variable `AUTH`. The value is the minified JSON string that represents the `AuthConfig` struct.
+
+```go
+type AuthConfig struct {
+	EnabledProviders []string                     `json:"enabled_providers"`
+	Providers        map[string]map[string]string `json:"providers"`
+}
+```
+
+**Example**
+
+```json
+{
+  "enabled_providers": ["github", "google"],
+  "providers": {
+    "github": {
+      "client_id": "__github_client_id__",
+      "client_secret": "__github_client_secret__"
+    },
+    "google": {
+      "client_id": "xxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
+      "client_secret": "__google_client_secret__"
+    },
+    "twitter": {
+      "consumer_key": "twitter_consumer_key",
+      "consumer_secret": "twitter_consumer_secret"
+    }
+  }
+}
+```
+
+### Auth Provider endpoints
+
+- `/api/auth/:provider/login`: Redirect to the provider login page.
+- `/api/auth/:provider/callback`: The provider will redirect to this endpoint after the user logs in.
+
+### Custom Auth Provider
+
+Only **GitHub** and **Google** are supported at the moment.
+We will add more providers in the future.
+
+If you want to add a custom provider, you can implement the `fs.AuthProvider` interface.
+
+```go
+type AuthProvider interface {
+	Name() string
+	Login(Context) (any, error)
+	Callback(Context) (*User, error)
+}
+```
+
+FastSchema allow registering the `auth provider` maker function. The maker function should return a new instance of the `AuthProvider`.
+
+```go
+package main
+
+import "github.com/fastschema/fastschema/fs"
+
+func main() {
+  fs.RegisterAuthProviderMaker("custom", NewCustomAuthProvider)
+}
+```
