@@ -9,7 +9,6 @@ A Hook can be a resource hook, database hook, or application hook, allowing you 
 The FastSchema hooks system is still in its early stages, and we're actively working on enhancing it. If you have feedback or suggestions, please let us know.
 :::
 
-
 ## OnPreResolve
 
 ```go
@@ -128,4 +127,145 @@ app.OnPostDBGet(func(
 })
 
 app.Start()
+```
+
+## PostDBCreate
+
+```go
+type PostDBCreate = func(
+	schema *schema.Schema,
+	id uint64,
+	dataCreate *schema.Entity,
+) error
+
+func (a *App) OnPostDBCreate(hooks ...db.PostDBCreate)
+```
+
+The `PostDBCreate` hook is executed after the database `Create` operation is performed.
+
+It can be used to trigger additional actions after a new entity is created.
+
+- `schema` is the schema of the entity.
+- `id` is the ID of the created entity.
+- `dataCreate` is the data used to create the entity.
+
+**Example:**
+
+```go{5-19}
+app, _ := fastschema.New(&fs.Config{
+  SystemSchemas: []any{Tag{}, Blog{}},
+})
+
+app.OnPostDBCreate(func(
+  schema *schema.Schema,
+  id uint64,
+  dataCreate *schema.Entity,
+) error {
+  if schema.Name != "file" {
+    return nil
+  }
+
+  // some logic to handle the file entity
+  // e.g. move the file to a different location
+  // or optimize the file for faster access
+
+  return nil
+})
+```
+
+## PostDBUpdate
+
+```go
+type PostDBUpdate = func(
+	schema *schema.Schema,
+	predicates []*Predicate,
+	updateData *schema.Entity,
+	originalEntities []*schema.Entity,
+	affected int,
+) error
+
+func (a *App) OnPostDBUpdate(hooks ...db.PostDBUpdate)
+```
+
+The `PostDBUpdate` hook is executed after the database `Update` operation is performed.
+
+It can be used to trigger additional actions after one or many entities are updated.
+
+- `schema` is the schema of the entity.
+- `predicates` are the predicates used to filter the entities for the update.
+- `updateData` is the data used to update the entities.
+- `originalEntities` are the entities before the update.
+- `affected` is the number of entities affected by the update.
+
+**Example:**
+
+```go{5-21}
+app, _ := fastschema.New(&fs.Config{
+  SystemSchemas: []any{Tag{}, Blog{}},
+})
+
+app.OnPostDBUpdate(func(
+  schema *schema.Schema,
+  predicates []*Predicate,
+  updateData *schema.Entity,
+  originalEntities []*schema.Entity,
+  affected int,
+) error {
+  if schema.Name != "tag" {
+    return nil
+  }
+
+  // some logic to handle the tag entity update
+  // e.g. update the tag in a search index
+  // or update the tag in a cache
+
+  return nil
+})
+```
+
+## PostDBDelete
+
+```go
+type PostDBDelete = func(
+	schema *schema.Schema,
+	predicates []*Predicate,
+	originalEntities []*schema.Entity,
+	affected int,
+) error
+
+func (a *App) OnPostDBDelete(hooks ...db.PostDBDelete)
+```
+
+The `PostDBDelete` hook is executed after the database `Delete` operation is performed.
+
+It can be used to trigger additional actions after one or many entities are deleted.
+
+- `schema` is the schema of the entity.
+- `predicates` are the predicates used to filter the entities for the delete.
+- `originalEntities` are the entities before the delete.
+- `affected` is the number of entities affected by the delete.
+
+**Example:**
+
+```go{5-21}
+app, _ := fastschema.New(&fs.Config{
+  SystemSchemas: []any{Tag{}, Blog{}},
+})
+
+app.OnPostDBDelete(func(
+  schema *schema.Schema,
+  predicates []*Predicate,
+  originalEntities []*schema.Entity,
+  affected int,
+) error {
+  if schema.Name != "tag" {
+    return nil
+  }
+
+  // some logic to handle the tag entity delete
+  // e.g. remove the tag from a search index
+  // or remove the tag from a cache
+
+  return nil
+})
 ```

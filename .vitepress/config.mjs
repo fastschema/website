@@ -8,6 +8,7 @@ export default defineConfig({
   titleTemplate: ":title - FastSchema",
   description: "A web framework and headless CMS written in Go",
   ignoreDeadLinks: true,
+  lastUpdated: true,
   head: [
     ['link', {
       rel: 'icon',
@@ -34,7 +35,6 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Getting Started', link: '/docs/getting-started' },
     ],
-
     sidebar: {
       '/docs/': [
         {
@@ -58,6 +58,9 @@ export default defineConfig({
             { text: 'Create record', link: '/docs/headless-cms/create-record' },
             { text: 'Update record', link: '/docs/headless-cms/update-record' },
             { text: 'Delete record', link: '/docs/headless-cms/delete-record' },
+            { text: 'Bulk update', link: '/docs/headless-cms/bulk-update' },
+            { text: 'Bulk delete', link: '/docs/headless-cms/bulk-delete' },
+            { text: 'Realtime updates', link: '/docs/headless-cms/realtime-updates' },
           ],
         },
         {
@@ -101,16 +104,23 @@ export default defineConfig({
             { text: 'Deployment', link: '/docs/web-framework/deployment/' },
           ],
         },
+        {
+          text: 'SDK',
+          link: '/docs/sdk/',
+          collapsed: false,
+        }
       ],
     },
-
     socialLinks: [
       { icon: 'github', link: 'https://github.com/fastschema/fastschema' }
     ],
-
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2023-present FastSchema',
+      copyright: 'Copyright © 2023-present <a href="https://github.com/ngocphuongnb" target="_blank">Ngoc Phuong</a> and contributors.'
+    },
+    sitemap: {
+      hostname: 'https://fastschema.com',
+      lastmodDateOnly: false
     }
   }
 })

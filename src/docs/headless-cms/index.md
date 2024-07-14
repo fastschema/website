@@ -32,6 +32,7 @@ FastSchema provides a set of routes to interact with the system:
   - **Role routes:** `/api/role`
   - **File routes:** `/api/file`
   - **Tools routes:** `/api/tool`
+  - **Realtime routes:** `/api/realtime`
 - **API documentation:** `/docs`
 - **Admin Panel:** `/dash`
 - **Uploads:** `/files` _(if the local storage is used, the path `/files` may be different according to the configuration)_
