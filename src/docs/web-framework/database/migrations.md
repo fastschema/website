@@ -15,6 +15,7 @@ config := &db.Config{
   Port:         "3306",
   User:         "root",
   Pass:         "123",
+  DisableForeignKeys:         true,
   MigrationDir: "data/migrations",
 }
 
