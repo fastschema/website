@@ -47,6 +47,7 @@ Fastschema use environment variables for configuration. There are two ways to se
 | DB_PORT              | Number      | -                          |                                                   Database port |
 | DB_USER              | String      | -                          |                                                   Database user |
 | DB_PASS              | String      | -                          |                                               Database password |
+| DB_DISABLE_FOREIGN_KEYS              | Boolean     | -                          |                                               Database disable foreign keys. Available values: `true`, `false` |
 | STORAGE_DEFAULT_DISK | String      | public                     |                                               Default disk name |
 | STORAGE_DISKS        | JSON string | -                          |                                    Array of disk configurations |
 
