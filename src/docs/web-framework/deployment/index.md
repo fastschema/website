@@ -35,7 +35,7 @@ To run the binary, simply download it and execute it:
 
 FastSchema provides a Docker image for running the application in a containerized environment.
 
-The Docker image is available on the [GitHub Container Registry](ghcr.io/fastschema/fastschema).
+The Docker image is available on the [GitHub Container Registry](https://ghcr.io/fastschema/fastschema).
 
 To run FastSchema using Docker, pull the image and run it:
 

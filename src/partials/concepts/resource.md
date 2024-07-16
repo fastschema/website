@@ -8,4 +8,4 @@ When defining a Resource, you can specify the input data that it expects and the
 
 Client requests don't go directly to the Resource. Instead, they are routed by a resolver, which directs the request to the appropriate Resource. Currently, FastSchema uses a RestfulResolver, which routes requests based on the HTTP method and path. In the future, additional resolvers, such as a GraphQL resolver, may be introduced.
 
-For more information, refer to the [Resource Documentation](/docs/web-framework/resource).
+For more information, refer to the [Resource Documentation](/docs/web-framework/resource/).

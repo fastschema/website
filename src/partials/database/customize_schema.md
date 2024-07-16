@@ -56,7 +56,7 @@ type Category struct {
 
 **Additionally, you can use the `fs.db` tag to customize the DB index and unique constraint for the table.**
 :::warning
-The value of `fs.db` tag must be a valid [HJSON](github.com/hjson/hjson-go) string and satisfy the `schema.SchemaDB` type.
+The value of `fs.db` tag must be a valid [HJSON](https://github.com/hjson/hjson-go) string and satisfy the `schema.SchemaDB` type.
 :::
 
 ::: code-group

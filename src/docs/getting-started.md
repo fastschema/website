@@ -4,7 +4,7 @@
 
 This section provides instructions on how to install FastSchema as a Headless CMS.
 
-If you are looking to use FastSchema as a Web Framework, you can follow the instructions in the [Web Framwork](/docs/web-framework) section.
+If you are looking to use FastSchema as a Web Framework, you can follow the instructions in the [Web Framwork](/docs/web-framework/) section.
 
 ### Method 1: Using Docker
 

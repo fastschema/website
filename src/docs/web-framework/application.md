@@ -108,7 +108,7 @@ The `Logger` option allows you to specify a custom logger that the FastSchema Ap
 
 If no logger is specified, the FastSchema Application will use the default logger which logs messages to the console and saves them to a log file `data/logs/app.log`.
 
-For more information on how to create a custom logger, see the [Logger](/docs/web-framework/logger) documentation.
+For more information on how to create a custom logger, see the [Logger](/docs/web-framework/logging/) documentation.
 
 ### DB
 
@@ -118,7 +118,7 @@ If no database client is specified, the FastSchema Application will use the defa
 
 The default DB client will also looking for the configuration from the environment variables. If there is no environment variable set, it will use a SQLite database.
 
-For more information on how to create a custom database client, see the [Database](/docs/web-framework/database) documentation.
+For more information on how to create a custom database client, see the [Database](/docs/web-framework/database/) documentation.
 
 ### StorageConfig
 
@@ -126,7 +126,7 @@ The `StorageConfig` option allows you to specify the configuration for the stora
 
 If no storage configuration is specified, the FastSchema Application will use a local storage system as its default storage system.
 
-For more information on how to create a custom storage system, see the [Storage](/docs/web-framework/storage) documentation.
+For more information on how to create a custom storage system, see the [Storage](/docs/web-framework/storage/) documentation.
 
 ### HideResourcesInfo
 
@@ -192,4 +192,4 @@ app.AddMiddlewares(func(c Context) error {
 
 These methods allow you to add hooks to the FastSchema Application.
 
-For more information on how to use hooks, see the [Hooks](/docs/web-framework/hooks) documentation.
+For more information on how to use hooks, see the [Hooks](/docs/web-framework/hooks/) documentation.

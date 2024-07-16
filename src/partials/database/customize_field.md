@@ -89,7 +89,7 @@ type Category struct {
 
 The value of `fs.enums` tag must meet the following criteria:
 
-- A valid [HJSON](github.com/hjson/hjson-go) string.
+- A valid [HJSON](https://github.com/hjson/hjson-go) string.
 - Represent the `[]*schema.FieldEnum` type.
 
 **Example:**
@@ -147,7 +147,7 @@ type Category struct {
 
 The value of `fs.relation` tag must meet the following criteria:
 
-- A valid [HJSON](github.com/hjson/hjson-go) string.
+- A valid [HJSON](https://github.com/hjson/hjson-go) string.
 - Represent the `*schema.Relation` type.
 
 **Example:**
@@ -238,7 +238,7 @@ type Blog struct {
 
 The value of `fs.renderer` tag must meet the following criteria:
 
-- A valid [HJSON](github.com/hjson/hjson-go) string.
+- A valid [HJSON](https://github.com/hjson/hjson-go) string.
 - Represent the `*schema.FieldRenderer` type.
 
 **Example:**
@@ -294,7 +294,7 @@ type Blog struct {
 
 The value of `fs.db` tag must meet the following criteria:
 
-- A valid [HJSON](github.com/hjson/hjson-go) string.
+- A valid [HJSON](https://github.com/hjson/hjson-go) string.
 - Represent the `*schema.FieldDB` type.
 
 **Example:**
