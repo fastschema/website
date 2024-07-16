@@ -38,8 +38,8 @@ export default defineConfig({
     search: {
       provider: 'algolia',
       options: {
-        appId: '5P4SO0DDHL',
-        apiKey: '3bd893f4cdebd0c6860b2c9c5e8a55aa',
+        appId: 'OY3YHFZHM7',
+        apiKey: '30e67619561e5281c059434069557cd7',
         indexName: 'fastschema'
       },
     },
