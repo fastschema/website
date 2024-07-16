@@ -26,10 +26,22 @@ export default defineConfig({
       md.use(tabsMarkdownPlugin)
     }
   },
+  sitemap: {
+    hostname: 'https://fastschema.com',
+    lastmodDateOnly: false,
+  },
   themeConfig: {
     logo: '/static/images/logo.svg',
     editLink: {
       pattern: 'https://github.com/fastschema/website/edit/master/src/:path'
+    },
+    search: {
+      provider: 'algolia',
+      options: {
+        appId: '5P4SO0DDHL',
+        apiKey: '3bd893f4cdebd0c6860b2c9c5e8a55aa',
+        indexName: 'fastschema'
+      },
     },
     nav: [
       { text: 'Home', link: '/' },
@@ -118,9 +130,5 @@ export default defineConfig({
       message: 'Released under the MIT License.',
       copyright: 'Copyright © 2023-present <a href="https://github.com/ngocphuongnb" target="_blank">Ngoc Phuong</a> and contributors.'
     },
-    sitemap: {
-      hostname: 'https://fastschema.com',
-      lastmodDateOnly: false
-    }
   }
 })
