@@ -27,7 +27,7 @@ features:
   - title: Extensible and Flexible
     icon:
       src: /static/images/extend.svg
-    details: "Extend and customize with Go code, build extensive features by leveraging the powerful of Resources, Hooks, ORM."
+    details: "Customize with <b>Go code</b> or <b>JS plugins</b>, build extensive features by leveraging the powerful of Resources, Hooks, ORM..."
 ---
 
 <script setup>
@@ -56,6 +56,14 @@ import OASOutputWithCustomResource from '../.vitepress/components/OASOutputWithC
 
 ::: details This will automatically generate OpenAPI spec
 <OASOutputWithCustomResource />
+
+== Plugins System 🧩
+::: code-group
+
+<<< @/partials/plugins/plugin.js{js} [plugin.js]
+<<< @/partials/plugins/utils.js{js} [utils.js]
+<<< @/partials/plugins/product.json{json} [product.json]
+
 
 :::
 

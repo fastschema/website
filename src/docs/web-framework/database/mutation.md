@@ -4,10 +4,10 @@ The package `db` provides a set of methods to perform mutation operations on the
 
 ## Mutation
 
-The `Mutation` function creates a new mutation builder for a specific schema.
+The `Builder` function creates a new mutation builder for a specific schema.
 
 ```go
-func Mutation[T any](client Client, schemas ...string) *DBMutation[T]
+func Builder[T any](client Client, schemas ...string) *QueryBuilder[T]
 ```
 
 A type parameter `T` is used to determine the schema and the type of the records returned by the query. `T` can be one of the following types:
@@ -22,13 +22,13 @@ A type parameter `T` is used to determine the schema and the type of the records
 ```go [SystemSchema]
 // Create a mutation builder to insert into the table `blog`
 // Blog is a SystemSchema
-mutation := db.Mutation[Blog](client)
+mutation := db.Builder[Blog](client)
 ```
 
 ```go [UserSchema]
 // Create a mutation builder to insert into the table `blog`
 // "blog" is the schema name
-mutation := db.Mutation[*schema.Entity](client, "blog")
+mutation := db.Builder[*schema.Entity](client, "blog")
 ```
 
 :::
@@ -161,16 +161,16 @@ To create a transaction, use the `Tx` method of the database client.
 ```go{2}
 ctx := context.Background()
 tx, _ := client.Tx(ctx)
-tag1, _ := db.Mutation[Tag](tx).Create(ctx, fs.Map{
+tag1, _ := db.Builder[Tag](tx).Create(ctx, fs.Map{
   "name": "Tag 1",
   "desc": "Tag 1 description",
 })
-tag2, _ := db.Mutation[Tag](tx).Create(ctx, fs.Map{
+tag2, _ := db.Builder[Tag](tx).Create(ctx, fs.Map{
   "name": "Tag 2",
   "desc": "Tag 2 description",
 })
 
-blog, err := db.Mutation[Blog](tx).Create(ctx, fs.Map{
+blog, err := db.Builder[Blog](tx).Create(ctx, fs.Map{
   "title": "Hello World",
   "body":  "This is a blog post",
   "tags": []*schema.Entity{

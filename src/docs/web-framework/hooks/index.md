@@ -9,6 +9,30 @@ A Hook can be a resource hook, database hook, or application hook, allowing you 
 The FastSchema hooks system is still in its early stages, and we're actively working on enhancing it. If you have feedback or suggestions, please let us know.
 :::
 
+Most hooks have a similar signature:
+
+```go
+// The context object that was passed to the action
+context.Context
+
+// Middleware is a function that can be used to add middleware to a resource
+type Middleware func(c Context) error
+
+type QueryOption struct {
+	Schema     *schema.Schema `json:"schema"`
+	Limit      uint           `json:"limit"`
+	Offset     uint           `json:"offset"`
+	Columns    []string       `json:"columns"`
+	Order      []string       `json:"order"`
+	Predicates []*Predicate   `json:"predicates"`
+	Query      string         `json:"query"`
+	Args       any            `json:"args"`
+	// For count query
+	Column string `json:"column"`
+	Unique bool   `json:"unique"`
+}
+```
+
 ## OnPreResolve
 
 ```go
@@ -85,18 +109,34 @@ app.API().Add(fs.Get("hello", func(ctx fs.Context, _ any) (any, error) {
 app.Start()
 ```
 
-## OnPostDBGet
+## OnPreDBQuery
 
 ```go{6}
-type PostDBGet = func(
-  query *QueryOption,
-  entities []*schema.Entity,
-) ([]*schema.Entity, error)
+type PreDBQuery = func(
+	ctx context.Context,
+	option *QueryOption,
+) error
 
-func (a *App) OnPostDBGet(hooks ...db.PostDBGet)
+func (a *App) OnPreDBQuery(hooks ...db.PreDBQuery)
 ```
 
-The `OnPostDBGet` hook is executed after the database `Get`, `First`, `Only` operations is performed.
+The `OnPreDBQuery` hook is executed before the database `Get`, `First`, `Only` operations are performed.
+
+It can be used to manipulate the query before it is executed.
+
+## OnPostDBQuery
+
+```go{7}
+type PostDBQuery = func(
+	ctx context.Context,
+	option *QueryOption,
+	entities []*schema.Entity,
+) ([]*schema.Entity, error)
+
+func (a *App) OnPostDBQuery(hooks ...db.PostDBGet)
+```
+
+The `OnPostDBQuery` hook is executed after the database `Get`, `First`, `Only` operations is performed.
 
 It can be used to manipulate the query result before it is returned to the client.
 
@@ -107,7 +147,8 @@ app, _ := fastschema.New(&fs.Config{
   SystemSchemas: []any{Tag{}, Blog{}},
 })
 
-app.OnPostDBGet(func(
+app.OnPostDBQuery(func(
+  ctx context.Context,
   query *db.QueryOption,
   entities []*schema.Entity,
 ) ([]*schema.Entity, error) {
@@ -129,13 +170,34 @@ app.OnPostDBGet(func(
 app.Start()
 ```
 
+## PreDBCreate
+
+```go
+type PreDBCreate = func(
+	ctx context.Context,
+	schema *schema.Schema,
+	createData *schema.Entity,
+) error
+
+func (a *App) OnPreDBCreate(hooks ...db.PreDBCreate)
+```
+
+The `PreDBCreate` hook is executed before the database `Create` operation is performed.
+
+It can be used to manipulate the data before it is created.
+
+- `schema` is the schema of the entity.
+- `createData` is the data used to create the entity.
+
+
 ## PostDBCreate
 
 ```go
 type PostDBCreate = func(
+	ctx context.Context,
 	schema *schema.Schema,
-	id uint64,
 	dataCreate *schema.Entity,
+	id uint64,
 ) error
 
 func (a *App) OnPostDBCreate(hooks ...db.PostDBCreate)
@@ -157,9 +219,10 @@ app, _ := fastschema.New(&fs.Config{
 })
 
 app.OnPostDBCreate(func(
-  schema *schema.Schema,
-  id uint64,
-  dataCreate *schema.Entity,
+  ctx context.Context,
+	schema *schema.Schema,
+	dataCreate *schema.Entity,
+	id uint64,
 ) error {
   if schema.Name != "file" {
     return nil
@@ -173,10 +236,32 @@ app.OnPostDBCreate(func(
 })
 ```
 
+## PreDBUpdate
+
+```go
+type PreDBUpdate = func(
+	ctx context.Context,
+	schema *schema.Schema,
+	predicates []*Predicate,
+	updateData *schema.Entity,
+) error
+
+func (a *App) OnPreDBUpdate(hooks ...db.PreDBUpdate)
+```
+
+The `PreDBUpdate` hook is executed before the database `Update` operation is performed.
+
+It can be used to manipulate the update data or the predicates before the update is executed.
+
+- `schema` is the schema of the entity.
+- `predicates` are the predicates used to filter the entities for the update.
+- `updateData` is the data used to update the entities.
+
 ## PostDBUpdate
 
 ```go
 type PostDBUpdate = func(
+	ctx context.Context,
 	schema *schema.Schema,
 	predicates []*Predicate,
 	updateData *schema.Entity,
@@ -205,11 +290,12 @@ app, _ := fastschema.New(&fs.Config{
 })
 
 app.OnPostDBUpdate(func(
-  schema *schema.Schema,
-  predicates []*Predicate,
-  updateData *schema.Entity,
-  originalEntities []*schema.Entity,
-  affected int,
+  ctx context.Context,
+	schema *schema.Schema,
+	predicates []*Predicate,
+	updateData *schema.Entity,
+	originalEntities []*schema.Entity,
+	affected int,
 ) error {
   if schema.Name != "tag" {
     return nil
@@ -223,10 +309,30 @@ app.OnPostDBUpdate(func(
 })
 ```
 
+## PreDBDelete
+
+```go
+type PreDBDelete = func(
+	ctx context.Context,
+	schema *schema.Schema,
+	predicates []*Predicate,
+) error
+
+func (a *App) OnPreDBDelete(hooks ...db.PreDBDelete)
+```
+
+The `PreDBDelete` hook is executed before the database `Delete` operation is performed.
+
+It can be used to manipulate the predicates before the delete is executed.
+
+- `schema` is the schema of the entity.
+- `predicates` are the predicates used to filter the entities for the delete.
+
 ## PostDBDelete
 
 ```go
 type PostDBDelete = func(
+  ctx context.Context,
 	schema *schema.Schema,
 	predicates []*Predicate,
 	originalEntities []*schema.Entity,
@@ -253,10 +359,11 @@ app, _ := fastschema.New(&fs.Config{
 })
 
 app.OnPostDBDelete(func(
-  schema *schema.Schema,
-  predicates []*Predicate,
-  originalEntities []*schema.Entity,
-  affected int,
+  ctx context.Context,
+	schema *schema.Schema,
+	predicates []*Predicate,
+	originalEntities []*schema.Entity,
+	affected int,
 ) error {
   if schema.Name != "tag" {
     return nil
@@ -269,3 +376,37 @@ app.OnPostDBDelete(func(
   return nil
 })
 ```
+
+## PreDBExec
+  
+```go
+type PreDBExec = func(
+	ctx context.Context,
+	option *QueryOption,
+) error
+
+func (a *App) OnPreDBExec(hooks ...db.PreDBExec)
+```
+
+The `PreDBExec` hook is executed before the database `Exec` operation is performed.
+
+It can be used to manipulate the query before it is executed.
+
+
+## PostDBExec
+
+```go
+type PostDBExec = func(
+	ctx context.Context,
+	option *QueryOption,
+	result sql.Result,
+) error
+
+func (a *App) OnPostDBExec(hooks ...db.PostDBExec)
+```
+
+The `PostDBExec` hook is executed after the database `Exec` operation is performed.
+
+It can be used to trigger additional actions after the query is executed.
+
+- `result` is the result of the query execution.

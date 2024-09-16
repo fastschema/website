@@ -1,7 +1,8 @@
 import { defineConfig } from 'vitepress';
 import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs';
+import { withMermaid } from 'vitepress-plugin-mermaid';
 
-export default defineConfig({
+const config = defineConfig({
   srcDir: './src',
   outDir: './build',
   title: "FastSchema",
@@ -76,6 +77,17 @@ export default defineConfig({
           ],
         },
         {
+          text: 'Plugins',
+          link: '/docs/plugins/',
+          collapsed: false,
+          items: [
+            { text: 'Configuration', link: '/docs/plugins/configuration' },
+            { text: 'Initialization', link: '/docs/plugins/initialization' },
+            { text: 'APIs', link: '/docs/plugins/apis' },
+            { text: 'Rules', link: '/docs/plugins/rules' },
+          ],
+        },
+        {
           text: 'Web Framework',
           link: '/docs/web-framework/',
           collapsed: false,
@@ -131,4 +143,14 @@ export default defineConfig({
       copyright: 'Copyright © 2023-present <a href="https://github.com/ngocphuongnb" target="_blank">Ngoc Phuong</a> and contributors.'
     },
   }
-})
+});
+
+export default withMermaid({
+  ...config,
+  mermaid: {
+    // https://mermaid.js.org/config/setup/modules/mermaidAPI.html#mermaidapi-configuration-defaults
+  },
+  mermaidPlugin: {
+    class: 'mermaid',
+  },
+});

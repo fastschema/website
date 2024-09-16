@@ -36,7 +36,7 @@ type Blog struct {
 
 ```go [Query Example]
 // blogs has type []Blog
-blogs, err := db.Query[Blog](client).
+blogs, err := db.Builder[Blog](client).
 	Select("id", "title", "tags.id", "tags.name").
 	Where(db.Or(
 		db.EQ("id", 1),
@@ -52,10 +52,10 @@ blogs, err := db.Query[Blog](client).
 
 ## Query Builder
 
-The `Query` function is used to create a new query builder for a specific schema:
+The `Builder` function is used to create a new query builder for a specific schema:
 
 ```go
-func Query[T any](client Client, schemas ...string) *DBQuery[T]
+func Builder[T any](client Client, schemas ...string) *QueryBuilder[T]
 ```
 
 A type parameter `T` is used to determine the schema and the type of the records returned by the query. `T` can be one of the following types:
@@ -74,7 +74,7 @@ This parameter can be a pointer to a struct or a struct type.
 ```go{4}
 // Create a query builder to query from the table `blog`
 // Blog is a SystemSchema
-query := db.Query[Blog](client)
+query := db.Builder[Blog](client)
 ```
 
 ### Query Builder for UserSchema
@@ -88,7 +88,7 @@ FastSchema need to know which schema/model the query is for. To do this, we pass
 ```go{5}
 // Create a query builder to query from the table `blog`
 // "blog" is the schema name
-query := db.Query[*schema.Entity](client, "blog")
+query := db.Builder[*schema.Entity](client, "blog")
 ```
 
 ## Limit
@@ -98,7 +98,7 @@ The `Limit` method is used to limit the number of records returned by the query.
 **Example:**
 
 ```go{2}
-query := db.Query[Blog](client)
+query := db.Builder[Blog](client)
 query.Limit(10)
 ```
 
@@ -109,7 +109,7 @@ The `Offset` method is used to skip a number of records before returning the res
 **Example:**
 
 ```go{2}
-query := db.Query[Blog](client)
+query := db.Builder[Blog](client)
 query.Offset(20)
 ```
 
@@ -120,7 +120,7 @@ The `Order` method is used to sort the records returned by the query.
 **Example:**
 
 ```go{3}
-query := db.Query[Blog](client)
+query := db.Builder[Blog](client)
 // Descending order by id, remove `-` for ascending order
 query.Order("-id")
 ```
@@ -134,7 +134,7 @@ The `Select` method is used to select specific fields from the records.
 **Example:**
 
 ```go{3}
-query := db.Query[Blog](client)
+query := db.Builder[Blog](client)
 query.Select("id", "title", "tags.id", "tags.name")
 ```
 
@@ -145,7 +145,7 @@ The `Where` method is used to filter the records returned by the query.
 **Example:**
 
 ```go{2-5}
-query := db.Query[Blog](client)
+query := db.Builder[Blog](client)
 query.Where(db.Or(
 	db.EQ("id", 1),
 	db.EQ("title", "First Blog"),
@@ -161,13 +161,13 @@ The `Get` method is used to execute the query and return list of records that ma
 ::: code-group
 
 ```go{3} [SystemSchema]
-query := db.Query[Blog](client)
+query := db.Builder[Blog](client)
 // records has type []*Blog
 records, err := query.Get(context.Background())
 ```
 
 ```go{3} [UserSchema]
-query := db.Query(client, schema.NamedEntity("blog"))
+query := db.Builder(client, schema.NamedEntity("blog"))
 // records has type []*schema.Entity
 records, err := query.Get(context.Background())
 ```
@@ -185,13 +185,13 @@ The `First` method is used to execute the query and return the first record that
 ::: code-group
 
 ```go{3} [SystemSchema]
-query := db.Query[Blog](client)
+query := db.Builder[Blog](client)
 // record has type *Blog
 record, err := query.First(context.Background())
 ```
 
 ```go{3} [UserSchema]
-query := db.Query(client, schema.NamedEntity("blog"))
+query := db.Builder(client, schema.NamedEntity("blog"))
 // record has type *schema.Entity
 record, err := query.First(context.Background())
 ```
@@ -209,13 +209,13 @@ The `Only` method is used to execute the query and return the only record that m
 ::: code-group
 
 ```go{3} [SystemSchema]
-query := db.Query[Blog](client)
+query := db.Builder[Blog](client)
 // record has type *Blog
 record, err := query.Only(context.Background())
 ```
 
 ```go{3} [UserSchema]
-query := db.Query(client, schema.NamedEntity("blog"))
+query := db.Builder(client, schema.NamedEntity("blog"))
 // record has type *schema.Entity
 record, err := query.Only(context.Background())
 ```
@@ -229,6 +229,6 @@ The `Count` method is used to execute the query and return the number of records
 **Example:**
 
 ```go{3}
-query := db.Query[Blog](client)
+query := db.Builder[Blog](client)
 count, err := query.Count(context.Background())
 ```

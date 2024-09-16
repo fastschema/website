@@ -55,7 +55,7 @@ result, err := db.Exec(
 Query executes a query that returns rows, typically a SELECT in SQL.
 
 ```go
-func RawQuery[T any](
+func Query[T any](
   ctx context.Context,
   client Client,
   query string,
@@ -63,7 +63,7 @@ func RawQuery[T any](
 ) (ts []T, err error)
 ```
 
-**`RawQuery` accepts the following parameters:**
+**`Query` accepts the following parameters:**
 - `ctx`: A context.Context object
 - `client`: A database client
 - `query`: A SQL query
@@ -71,7 +71,7 @@ func RawQuery[T any](
 
 **_Additionally, a type parameter is required in order to specify the type of the result. The type parameter can be:_**
 - ***schema.Entity:** The result rows will be scanned into a slice of `*schema.Entity`. This is helpful if you don't want to scan the result row into a struct.
-- **A struct type:** `RawQuery` will scan the result rows into a slice of the specified struct. The struct fields must match the columns in the result rows.
+- **A struct type:** `Query` will scan the result rows into a slice of the specified struct. The struct fields must match the columns in the result rows.
 
 **Example:**
 
@@ -87,7 +87,7 @@ type Blog struct {
 }
 
 // blogs has the type []Blog
-blogs, err := db.RawQuery[Blog](
+blogs, err := db.Query[Blog](
   ctx, client,
   "SELECT * FROM blogs WHERE id > ?",
   1,
@@ -96,7 +96,7 @@ blogs, err := db.RawQuery[Blog](
 
 ```go [Use *schema.Entity]
 // blogs has the type []*schema.Entity
-blogs, err := db.RawQuery[*schema.Entity](
+blogs, err := db.Query[*schema.Entity](
   ctx, client,
   "SELECT * FROM blogs WHERE id > ?",
   1,

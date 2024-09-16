@@ -10,21 +10,23 @@ You can use the context object to access information about the request, such as 
 
 ```go
 type Context interface {
-	ID() string
+	context.Context
+	TraceID() string
 	User() *User
-	Value(string, ...any) (val any)
+	Local(string, ...any) (val any)
 	Logger() logger.Logger
-	Parse(any) error
-	Context() context.Context
+	Bind(any) error
 	Args() map[string]string
 	Arg(string, ...string) string
 	ArgInt(string, ...int) int
-	Entity() (*schema.Entity, error)
+	Payload() (*schema.Entity, error)
 	Resource() *Resource
 	AuthToken() string
 	Next() error
 	Result(...*Result) *Result
 	Files() ([]*File, error)
+	Redirect(string) error
+	WSClient() WSClient
 }
 ```
 
