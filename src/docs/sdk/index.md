@@ -31,7 +31,7 @@ The initialization must be done before any other operation.
 import { FastSchema } from "fastschema";
 
 // Create a new instance of FastSchema
-const fs = new FastSchema("https://localhost:8000");
+const fs = new FastSchema("http://localhost:8000");
 
 // Login
 await fs.auth().login({
