@@ -23,7 +23,7 @@ features:
   - title: Rich built-in Features
     icon:
       src: /static/images/features.svg
-    details: "Effortlessly create web app with built-in features: Admin Control Panel, File manger, OAS, RBAC, and more."
+    details: "Effortlessly create web app with built-in features: Admin Control Panel, File manager, OAS, RBAC, and more."
   - title: Extensible and Flexible
     icon:
       src: /static/images/extend.svg
