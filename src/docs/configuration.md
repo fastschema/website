@@ -34,22 +34,22 @@ Fastschema use environment variables for configuration. There are two ways to se
 
 ## Available variables
 
-| Name                 | Type        | Default                    |                                                     Description |
-| -------------------- | :---------- | :------------------------- | --------------------------------------------------------------: |
-| APP_KEY (\*)         | String      | -                          |                                                 Application key |
-| APP_PORT             | Number      | 8000                       |                                                Application port |
-| APP_BASE_URL         | String      | http://localhost:8000      |                                 The Base URL of the application |
-| APP_DASH_URL         | String      | http://localhost:8000/dash |                             The Base URL of the admin dashboard |
-| APP_API_BASE_NAME    | String      | api                        |                                               The API namespace |
-| DB_DRIVER            | String      | sqlite                     | Database driver. Available values:<br>`sqlite`, `mysql`, `pgx`. |
-| DB_NAME              | String      | -                          |                                                   Database name |
-| DB_HOST              | Number      | localhost                  |                                                   Database host |
-| DB_PORT              | Number      | -                          |                                                   Database port |
-| DB_USER              | String      | -                          |                                                   Database user |
-| DB_PASS              | String      | -                          |                                               Database password |
-| DB_DISABLE_FOREIGN_KEYS              | Boolean     | -                          |                                               Database disable foreign keys. Available values: `true`, `false` |
-| STORAGE_DEFAULT_DISK | String      | public                     |                                               Default disk name |
-| STORAGE_DISKS        | JSON string | -                          |                                    Array of disk configurations |
+| Name                        | Type        | Default                    |                                                          Description |
+| --------------------------- | :---------- | :------------------------- | -------------------------------------------------------------------: |
+| APP_KEY (\*)                | String      | -                          |                                                      Application key |
+| APP_PORT                    | Number      | 8000                       |                                                     Application port |
+| APP_BASE_URL                | String      | http://localhost:8000      |                                      The Base URL of the application |
+| APP_DASH_URL                | String      | http://localhost:8000/dash |                                  The Base URL of the admin dashboard |
+| APP_API_BASE_NAME           | String      | api                        |                                                    The API namespace |
+| DB_DRIVER                   | String      | sqlite                     |      Database driver. Available values:<br>`sqlite`, `mysql`, `pgx`. |
+| DB_NAME                     | String      | -                          |                                                        Database name |
+| DB_HOST                     | Number      | localhost                  |                                                        Database host |
+| DB_PORT                     | Number      | -                          |                                                        Database port |
+| DB_USER                     | String      | -                          |                                                        Database user |
+| DB_PASS                     | String      | -                          |                                                    Database password |
+| DB_DISABLE_FOREIGN_KEYS     | Boolean     | -                          |     Database disable foreign keys. Available values: `true`, `false` |                  |                                               Default disk name |
+| STORAGE                     | JSON string | -                          |                                         Array of disk configurations |
+| MAIL                        | JSON string | -                          |                   Mail configuration that implements `fs.MailConfig` |
 
 <div class="tip custom-block" style="padding-top:8px;">
 (*) Required
@@ -63,9 +63,16 @@ Fastschema use environment variables for configuration. There are two ways to se
 
 For the first time you run FastSchema, the application will generate a random `APP_KEY` and store it in the `data/.env` file.
 
-## STORAGE_DISKS
+## STORAGE
 
-`STORAGE_DISKS` is a JSON string representing an array of disk configurations. Each disk configuration is described by the following Go struct:
+`STORAGE` is a JSON string representing `fs.StorageConfig` object with disk configurations.
+
+```go
+type StorageConfig struct {
+	DefaultDisk string        `json:"default_disk"`
+	Disks       []*DiskConfig `json:"disks"`
+}
+```
 
 ```go
 // github.com/fastschema/fastschema/fs/fs.go
@@ -100,13 +107,40 @@ If there is no disk configuration, the application will use the default disk con
 ]
 ```
 
-## STORAGE_DEFAULT_DISK
+## MAIL
 
-`STORAGE_DEFAULT_DISK` is the default disk name used for file storage. It must match one of the disk configurations in `STORAGE_DISKS`.
+`MAIL` is a JSON string representing `fs.MailConfig` object.
 
-If `STORAGE_DEFAULT_DISK` is not set, the application will use the first disk configuration in `STORAGE_DISKS` as the default disk.
+```go
+type MailConfig struct {
+	SenderName        string `json:"sender_name"`
+	SenderMail        string `json:"sender_mail"`
+	DefaultClientName string `json:"default_client"`
+	Clients           []Map  `json:"clients"`
+}
+```
 
-The default disk is used to store files uploaded by users and to serve uploaded files. If you are using FastSchema as a Web Framework, you can change change the storage destination by specifying the disk name.
+`Clients` is an array of `Map` objects. Each `Map` object represents a mail client configuration.
+
+**Example:**
+
+```json
+{
+  "sender_name": "FastSchema Accounts",
+  "sender_mail": "accounts@fastschema.com",
+  "default_client": "mailtrapsmtp",
+  "clients": [
+    {
+      "name": "mailtrapsmtp",
+      "driver": "smtp",
+      "host": "sandbox.smtp.mailtrap.io",
+      "port": 2525,
+      "username": "username",
+      "password": "password"
+    }
+  ]
+}
+```
 
 ## Minimum configuration
 

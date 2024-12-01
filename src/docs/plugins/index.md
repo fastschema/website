@@ -1,7 +1,7 @@
 ---
 prev:
   text: "Realtime Updates"
-  link: "/docs/headless-cms/realtime-updates"
+  link: "/docs/backend/realtime-updates"
 next:
   text: "Plugin Configuration"
   link: "/docs/plugins/configuration"

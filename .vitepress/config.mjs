@@ -7,7 +7,7 @@ const config = defineConfig({
   outDir: './build',
   title: "FastSchema",
   titleTemplate: ":title - FastSchema",
-  description: "A web framework and headless CMS written in Go",
+  description: "All-in-One Backend as a Service with Headless CMS Power",
   ignoreDeadLinks: true,
   lastUpdated: true,
   head: [
@@ -62,18 +62,18 @@ const config = defineConfig({
           ]
         },
         {
-          text: 'Headless CMS API',
-          link: '/docs/headless-cms/',
+          text: 'Backend API',
+          link: '/docs/backend/',
           collapsed: false,
           items: [
-            { text: 'Authentication', link: '/docs/headless-cms/authentication' },
-            { text: 'List records', link: '/docs/headless-cms/list-records' },
-            { text: 'Create record', link: '/docs/headless-cms/create-record' },
-            { text: 'Update record', link: '/docs/headless-cms/update-record' },
-            { text: 'Delete record', link: '/docs/headless-cms/delete-record' },
-            { text: 'Bulk update', link: '/docs/headless-cms/bulk-update' },
-            { text: 'Bulk delete', link: '/docs/headless-cms/bulk-delete' },
-            { text: 'Realtime updates', link: '/docs/headless-cms/realtime-updates' },
+            { text: 'Authentication', link: '/docs/backend/authentication' },
+            { text: 'List records', link: '/docs/backend/list-records' },
+            { text: 'Create record', link: '/docs/backend/create-record' },
+            { text: 'Update record', link: '/docs/backend/update-record' },
+            { text: 'Delete record', link: '/docs/backend/delete-record' },
+            { text: 'Bulk update', link: '/docs/backend/bulk-update' },
+            { text: 'Bulk delete', link: '/docs/backend/bulk-delete' },
+            { text: 'Realtime updates', link: '/docs/backend/realtime-updates' },
           ],
         },
         {

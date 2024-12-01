@@ -12,7 +12,7 @@ The `filter` query is a JSON object that contains the filter conditions to selec
 DELETE /api/content/post/?filter={"name":{"$like":"%post01%"},"categories.name":{"$like":"%category01%"}}
 ```
 
-For more information on the filter query, see the [filter records](/docs/headless-cms/list-records.html#filter) documentation.
+For more information on the filter query, see the [filter records](/docs/backend/list-records.html#filter) documentation.
 
 ::: danger IMPORTANT
 

@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: "FastSchema"
-  text: "A Go web framework and Headless CMS"
+  text: "Backend as a service and Go web framework"
   tagline: Simplify your web development
   actions:
     - theme: brand

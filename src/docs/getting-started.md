@@ -2,7 +2,7 @@
 
 ## Installation
 
-This section provides instructions on how to install FastSchema as a Headless CMS.
+This section provides instructions on how to install FastSchema as a complete backend.
 
 If you are looking to use FastSchema as a Web Framework, you can follow the instructions in the [Web Framwork](/docs/web-framework/) section.
 
@@ -155,8 +155,7 @@ DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_USER=root
 DB_PASS=123
-STORAGE_DEFAULT_DISK=public
-STORAGE_DISKS=[{"name":"public","driver":"local","root":"./public","public_path":"/files","base_url":"http://localhost:8000/files"},{"name":"my_s3","driver":"s3","root":"/files","provider":"DigitalOcean","endpoint":"sfo3.digitaloceanspaces.com","region":"sfo3","bucket":"my_bucket","access_key_id":"s3_access_key_id","secret_access_key":"s3_secret_access_key","base_url":"https://cdn.site.local"}]
+STORAGE='{"default_disk":"public","disks":[{"name":"public","driver":"local","root":"./public","public_path":"/","base_url":"http://localhost:8000/"},{"name":"my_s3","driver":"s3","root":"/files","provider":"DigitalOcean","endpoint":"sfo3.digitaloceanspaces.com","region":"sfo3","bucket":"my_bucket","access_key_id":"s3_access_key_id","secret_access_key":"s3_secret_access_key","base_url":"https://cdn.site.local"}]}'
 ```
 
 For more information, refer to the [Configuration](/docs/configuration) documentation.

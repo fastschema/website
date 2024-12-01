@@ -4,14 +4,14 @@ prev:
   link: '/docs/concepts'
 next:
   text: 'Authentication'
-  link: '/docs/headless-cms/authentication'
+  link: '/docs/backend/authentication'
 ---
 
-# Headless CMS
+# Backend as a Service
 
 ## Introduction
 
-FastSchema is designed to be used as a headless CMS. This means that you can use it to store and manage your content, and then **use the API to retrieve it and display it on your website.**
+FastSchema is designed to be used as a BaaS, allowing you to easily manage your backend, automate database creation, and **generate APIs for seamless integration with your frontend applications**.
 
 FastSchema provides a simple and easy-to-use Admin Panel that allows you to create and manage your content.
 

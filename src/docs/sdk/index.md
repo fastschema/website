@@ -125,7 +125,7 @@ fs.schema("tag").get<Tag>(params);
   }
   ```
 
-  Refer to the [Filter documentation](https://fastschema.com/docs/headless-cms/list-records.html#filter) for more information about the filter object.
+  Refer to the [Filter documentation](https://fastschema.com/docs/backend/list-records.html#filter) for more information about the filter object.
 
 ### Create content
 

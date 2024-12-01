@@ -6,7 +6,7 @@ next:
 
 # Introduction
 
-FastSchema is an open-source headless Content Management System (CMS) designed to simplify the creation and management of structured content. By leveraging schema definitions, FastSchema automates the generation of databases and provides CRUD (Create, Read, Update, Delete) APIs effortlessly.
+FastSchema is a Backend as a Service (BaaS) and Go web framework for building dynamic web applications. Designed to simplify backend development, FastSchema automates the generation of databases, provides ready-to-use CRUD APIs, and offers tools for managing structured content effortlessly
 
 ::: raw
 <div class="tip custom-block" style="padding-top: 8px">
@@ -20,9 +20,9 @@ FastSchema core features are built on top of `schema`, a blueprint that outlines
 
 ## Use Cases
 
-- **A Headless CMS (No-Code Solution)**
+- **A Backend as a Service (No-Code Solution)**
 
-  FastSchema is an ideal solution for building headless CMS applications that require dynamic content modeling without writing a line of code.
+  FastSchema is an ideal solution for building backend applications with real-time data management, dynamic content modeling, and automated API generation, all without writing a line of code.
 
   It is designed to support API-first development, allowing you to define your content models and generate RESTful APIs effortlessly.
 

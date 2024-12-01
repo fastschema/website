@@ -1,7 +1,7 @@
 ---
 prev:
   text: "Delete Record"
-  link: "/docs/headless-cms/delete-record"
+  link: "/docs/backend/delete-record"
 next:
   text: "Application"
   link: "/docs/web-framework/application"

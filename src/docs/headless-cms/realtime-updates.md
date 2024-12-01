@@ -6,7 +6,7 @@ FastSchema emits events whenever a schema record is created, updated, or deleted
 
 ## Authentication
 
-To connect to the FastSchema Realtime API, you need to authenticate using a valid Access Token. Refer to the [Authentication](http://localhost:3001/docs/headless-cms/authentication.html#authentication-1) section for more information on how to obtain an Access Token.
+To connect to the FastSchema Realtime API, you need to authenticate using a valid Access Token. Refer to the [Authentication](http://localhost:3001/docs/backend/authentication.html#authentication-1) section for more information on how to obtain an Access Token.
 
 To authenticate your WebSocket connection, you need to include the Access Token in the handshake request.
 
@@ -90,7 +90,7 @@ wss://fs-tests.com/api/realtime/content?schema=blog&select=name,tags
 
 The `filter` parameter allows you to subscribe to events based on a filter condition.
 
-The filter parameter should be a valid JSON object that specifies the filter condition, refer to the [Filter](/docs/headless-cms/list-records.html#filter) section for more information on how to construct filter conditions.
+The filter parameter should be a valid JSON object that specifies the filter condition, refer to the [Filter](/docs/backend/list-records.html#filter) section for more information on how to construct filter conditions.
 
 Any updates performed on records that don't match the filter condition will not trigger an event.
 

@@ -12,7 +12,7 @@ The `filter` query is a JSON object that contains the filter conditions to selec
 PUT /api/content/post/?filter={"name":{"$like":"%post01%"},"categories.name":{"$like":"%category01%"}}
 ```
 
-For more information on the filter query, see the [filter records](/docs/headless-cms/list-records.html#filter) documentation.
+For more information on the filter query, see the [filter records](/docs/backend/list-records.html#filter) documentation.
 
 ::: danger IMPORTANT
 
@@ -24,7 +24,7 @@ The bulk update API endpoint will update all records that match the filter query
 
 The update data is a JSON object that contains the field data to update or the update operations to perform.
 
-Refer to the [update record](/docs/headless-cms/update-record.html#update-data) documentation for more information on the supported update operations and the update data format.
+Refer to the [update record](/docs/backend/update-record.html#update-data) documentation for more information on the supported update operations and the update data format.
 
 ## Response
 

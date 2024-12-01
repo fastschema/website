@@ -22,7 +22,7 @@ app.Start()
 
 The above code creates a new instance of the FastSchema Application using default configuration options and starts the application.
 
-The default FastSchema Application includes all the features and functionality of the FastSchema Headless CMS, including the RESTful API, the Admin Panel, and the OAS viewer.
+The default FastSchema Application includes all the features and functionality of a full BaaS, including real-time data syncing, automatic database generation, ready-to-use RESTful APIs, and an intuitive Admin Panel for effortless content management.
 
 ## Configuration
 

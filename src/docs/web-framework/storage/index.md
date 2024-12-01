@@ -85,11 +85,9 @@ A default disk is used for general file storage, while additional disks can be c
 There are two methods for configuring disks:
 
 - Using environment variables:
-  - `STORAGE_DISKS`: A JSON array of disk configurations.
-  - `STORAGE_DEFAULT_DISK`: The name of the default disk.
+  - `STORAGE`: A string representing a JSON object with disk configurations.
 - Using application configuration:
-  - `app.Config.StorageConfig.DisksConfig`: A slice of disk configurations.
-  - `app.Config.StorageConfig.DefaultDisk`: The name of the default disk.
+  - `app.Config.StorageConfig`: A `StorageConfig` object with disk configurations.
 
 If there is no configuration for the default disk, the first disk in the configuration will be used as the default disk.
 

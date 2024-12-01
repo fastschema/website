@@ -1,11 +1,11 @@
 ---
 layout: home
-title: FastSchema - A Go web framework and Headless CMS
-titleTemplate: FastSchema - A Go web framework and Headless CMS
+title: FastSchema - All-in-One Backend as a Service
+titleTemplate: FastSchema - All-in-One Backend as a Service
 
 hero:
   name: "FastSchema"
-  text: "A Go web framework and Headless CMS"
+  text: "All-in-One Backend as a Service"
   tagline: Simplify your web development
   actions:
     - theme: brand
@@ -38,14 +38,14 @@ import OASOutputWithCustomResource from '../.vitepress/components/OASOutputWithC
 <!-- Use Cases tabs -->
 
 ## Use FastSchema in the ways that suit your needs
-*Launch a headless CMS in seconds or utilize as a web framework.*
+*Launch a complete backend in seconds or utilize it as a versatile web framework*
 
 :::tabs
-== Headless CMS ⚡️
+== BaaS ⚡️
 ::: code-group
 
-<<< @/partials/code-use-as-headless-cms/Command{bash}
-<<< @/partials/code-use-as-headless-cms/Output{bash}
+<<< @/partials/code-use-as-baas/Command{bash}
+<<< @/partials/code-use-as-baas/Output{bash}
 
 == Web Framework 🚀
 ::: code-group
