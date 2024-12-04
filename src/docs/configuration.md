@@ -47,7 +47,8 @@ Fastschema use environment variables for configuration. There are two ways to se
 | DB_PORT                     | Number      | -                          |                                                        Database port |
 | DB_USER                     | String      | -                          |                                                        Database user |
 | DB_PASS                     | String      | -                          |                                                    Database password |
-| DB_DISABLE_FOREIGN_KEYS     | Boolean     | -                          |     Database disable foreign keys. Available values: `true`, `false` |                  |                                               Default disk name |
+| DB_DISABLE_FOREIGN_KEYS     | Boolean     | -                          |     Database disable foreign keys. Available values: `true`, `false` |
+| AUTH                        | JSON string | -                          |                                          Auth provider configuration |
 | STORAGE                     | JSON string | -                          |                                         Array of disk configurations |
 | MAIL                        | JSON string | -                          |                   Mail configuration that implements `fs.MailConfig` |
 
@@ -62,6 +63,50 @@ Fastschema use environment variables for configuration. There are two ways to se
 `APP_KEY` must be consistent across application deployments. If it is changed, all existing JWT tokens will be invalidated.
 
 For the first time you run FastSchema, the application will generate a random `APP_KEY` and store it in the `data/.env` file.
+
+
+## AUTH
+
+`AUTH` is a JSON string representing `fs.AuthConfig` object.
+
+```go
+type AuthConfig struct {
+	EnabledProviders []string       `json:"enabled_providers"`
+	Providers        map[string]Map `json:"providers"`
+}
+```
+
+*The `local` provider is enabled by default.*
+
+For example, to enable the `github` and `google` providers:
+
+```json
+{
+  "enabled_providers": [
+    "github",
+    "google"
+  ],
+  "providers": {
+    "local": {
+      "activation_method": "email",
+      "activation_url": "http://localhost:3001/activation",
+      "recovery_url": "http://localhost:3001/recover"
+    },
+    "github": {
+      "client_id": "github_client_id",
+      "client_secret": "github_client_secret"
+    },
+    "google": {
+      "client_id": "xxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
+      "client_secret": "xxx"
+    },
+    "twitter": {
+      "consumer_key": "twitter_consumer_key",
+      "consumer_secret": "twitter_consumer_secret"
+    }
+  }
+}
+```
 
 ## STORAGE
 

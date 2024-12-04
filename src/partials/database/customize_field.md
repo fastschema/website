@@ -336,5 +336,72 @@ type Blog struct {
 
 ::: tip
 
-A field can also be customized using [Customize schema using a struct method](/docs/web-framework/database/system-schema.html#customize-schema-using-a-struct-method)
+A field can also be customized using [Customize schema using a struct method](/docs/framework/database/system-schema.html#customize-schema-using-a-struct-method)
 :::
+
+### Customize with tag `fs.setter`
+
+::: warning
+
+`fs.setter` and `fs.getter` tags must by a valid [expr](https://github.com/expr-lang/expr) expression that return the desired value.
+
+The expression can access the following variables:
+- $db: Provides access to the database instance, enabling queries.
+- $context: The context object.
+- $args: Includes custom arguments passed to the rule:
+    - Schema: The schema object.
+    - Entity: The entity object.
+    - Value: The field value before applying the setter/getter.
+    - Exist: A boolean value that indicates whether the field value exists.
+:::
+
+`fs.setter` tag is used to define the setter method for the field. This method will be called before the schema object is saved to the database.
+
+Using the `fs.setter` tag, you will be able to customize the field value before saving it to the database.
+
+Some common use cases for the setter method are:
+
+- Setting the default value for the field.
+- Formatting the field value before saving it to the database.
+- Encrypting the field value before saving it to the database.
+
+**Example:**
+
+*Set the author field to the current user ID*
+
+```go [Go Struct]
+type Blog struct {
+  Author *Author* `json:"author" fs.setter:"$context.Value('user').ID"`
+}
+```
+
+*Set the encrypted password field*
+
+```go [Go Struct]
+type User struct {
+  Password string `json:"password" fs.setter:"fs.setter:"$args.Exist && $args.Value != '' ? $hash($args.Value) : $undefined"`
+}
+```
+
+
+### Customize with tag `fs.getter`
+
+`fs.getter` tag is used to define the getter method for the field. This method will be called before the schema object is returned to the client.
+
+Using the `fs.getter` tag, you will be able to customize the field value before returning it to the client.
+
+Some common use cases for the getter method are:
+
+- Hiding sensitive information from the client.
+- Formatting the field value before returning it to the client.
+- Decrypting the field value before returning it to the client.
+
+**Example:**
+
+*Hide the password field*
+
+```go [Go Struct]
+type User struct {
+  Password string `json:"password" fs.getter:"$undefined"`
+}
+```

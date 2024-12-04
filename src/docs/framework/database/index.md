@@ -1,10 +1,10 @@
 ---
 prev:
   text: "Resource Resolver"
-  link: "/docs/web-framework/resource/resolver"
+  link: "/docs/framework/resource/resolver"
 next:
   text: "System Schema"
-  link: "/docs/web-framework/database/system-schema"
+  link: "/docs/framework/database/system-schema"
 ---
 
 # Database
@@ -20,21 +20,41 @@ If you want to use a different ORM or database package, you can implement the `d
 
 ```go
 type Client interface {
-  Dialect() string
-  Exec(c context.Context, query string, args any) (sql.Result, error)
-  Query(c context.Context, query string, args any) ([]*schema.Entity, error)
-  Rollback() error
-  Commit() error
-  CreateDBModel(s *schema.Schema, rs ...*schema.Relation) Model
-  Tx(c context.Context) (Client, error)
-  IsTx() bool
-  Model(name string, types ...any) (Model, error)
-  Close() error
-  SchemaBuilder() *schema.Builder
-  Reload(c context.Context, sb *schema.Builder, m *Migration)(Client, error)
-  DB() *sql.DB
-  Config() *Config
-  Hooks() *Hooks
+Dialect() string
+	// Exec executes a query that does not return records. For example, in SQL, INSERT or UPDATE.
+	// It return a sql.Result and an error if any.
+	Exec(ctx context.Context, query string, args ...any) (sql.Result, error)
+	// Query executes a query that returns rows, typically a SELECT in SQL.
+	// It return a slice of *entity.Entity and an error if any.
+	Query(ctx context.Context, query string, args ...any) ([]*entity.Entity, error)
+	Rollback() error
+	Commit() error
+	Tx(ctx context.Context) (Client, error)
+	IsTx() bool
+
+	// Model return the model from given name.
+	//
+	//	Support finding model from name or types
+	//	If the input model is a string, it will use the name to find the model
+	//	Others, it will use the types of the input to find the model
+	//
+	//	entities: The entities that the model will be created from
+	//  entities can be one of the following types:
+	//		- []*entity.Entity: The first entity will be used to create the model
+	//		- [][]byte: The first byte slice will be used to create the model by unmarshalling it
+	Model(model any) (Model, error)
+	Close() error
+	SchemaBuilder() *schema.Builder
+	Reload(
+		ctx context.Context,
+		newSchemaBuilder *schema.Builder,
+		migration *Migration,
+		disableForeignKeys bool,
+		enableMigrations ...bool,
+	) (Client, error)
+	DB() *sql.DB
+	Config() *Config
+	Hooks() *Hooks
 }
 ```
 

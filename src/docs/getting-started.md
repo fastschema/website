@@ -4,7 +4,7 @@
 
 This section provides instructions on how to install FastSchema as a complete backend.
 
-If you are looking to use FastSchema as a Web Framework, you can follow the instructions in the [Web Framwork](/docs/web-framework/) section.
+If you are looking to use FastSchema as a Web Framework, you can follow the instructions in the [Web Framwork](/docs/framework/) section.
 
 ### Method 1: Using Docker
 
@@ -49,12 +49,12 @@ _The setup token `{token}` is displayed in the terminal._
 
    - Select the latest release.
 
-   - Download the appropriate binary for your operating system (e.g., Linux, macOS, Windows). For example: `fastschema_0.1.0_linux_amd64.zip`
+   - Download the appropriate binary for your operating system (e.g., Linux, macOS, Windows). For example: `fastschema_0.6.2_linux_amd64.zip`
 
 2. **Extract the Binary:**
 
    ```bash
-   unzip fastschema_0.1.0_linux_amd64.zip
+   unzip fastschema_0.6.2_linux_amd64.zip
    ```
 
 3. **Run the Binary:**

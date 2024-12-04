@@ -161,4 +161,16 @@ The database configuration for the field. It accept an object that has the follo
 - `collation`: A string that represent the collation of the field in the database: utf8mb4_unicode_ci, utf8mb4_general_ci,...
 - `increment`: A boolean value that determines whether the field is auto-incremented.
 - `key`: A string that represent the key of the field in the database: PRI, UNI or MUL.
-  :::
+:::
+
+::: details setter
+
+The setter [expression](https://github.com/expr-lang/expr) for the field. It is used to set the value of the field before saving it to the database.
+
+:::
+
+::: details getter
+
+The getter [expression](https://github.com/expr-lang/expr) for the field. It is used to get the value of the field before returning it to the client.
+
+:::

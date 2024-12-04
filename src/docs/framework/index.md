@@ -4,7 +4,7 @@ prev:
   link: "/docs/backend/delete-record"
 next:
   text: "Application"
-  link: "/docs/web-framework/application"
+  link: "/docs/framework/application"
 ---
 
 # FastSchema Web Framework

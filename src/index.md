@@ -58,11 +58,24 @@ import OASOutputWithCustomResource from '../.vitepress/components/OASOutputWithC
 <OASOutputWithCustomResource />
 
 == Plugins System 🧩
-::: code-group
+::: code-group 
 
 <<< @/partials/plugins/plugin.js{js} [plugin.js]
 <<< @/partials/plugins/utils.js{js} [utils.js]
 <<< @/partials/plugins/product.json{json} [product.json]
+
+== Access Control 🛡️
+::: code-group
+
+<<< @/partials/access-control/check-ip.js{js}
+<<< @/partials/access-control/query-db.js{js}
+<<< @/partials/access-control/modify-request.js{js}
+
+== Setter/Getter ✨
+::: code-group
+
+<<< @/partials/database/setter.js{js}
+<<< @/partials/database/getter.js{js}
 
 
 :::

@@ -1,5 +1,6 @@
 docker pull ghcr.io/fastschema/fastschema:latest
 docker run \
+  -u "$UID" \
   -p 8000:8000 \
   -v ./data:/fastschema/data \
   ghcr.io/fastschema/fastschema:latest

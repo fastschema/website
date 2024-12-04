@@ -43,7 +43,7 @@ type Disk interface {
 ```go [StorageConfig]
 type StorageConfig struct {
 	DefaultDisk string        `json:"default_disk"`
-	DisksConfig []*DiskConfig `json:"disks"`
+	Disks       []*DiskConfig `json:"disks"`
 }
 ```
 

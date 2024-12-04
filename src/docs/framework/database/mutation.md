@@ -149,36 +149,3 @@ affected, err := mutation.
   Where(db.EQ("id", 1)).
   Delete(context.Background())
 ```
-
-## Transaction
-
-FastSchema supports performing multiple operations in a single transaction.
-
-To create a transaction, use the `Tx` method of the database client.
-
-**Example:**
-
-```go{2}
-ctx := context.Background()
-tx, _ := client.Tx(ctx)
-tag1, _ := db.Builder[Tag](tx).Create(ctx, fs.Map{
-  "name": "Tag 1",
-  "desc": "Tag 1 description",
-})
-tag2, _ := db.Builder[Tag](tx).Create(ctx, fs.Map{
-  "name": "Tag 2",
-  "desc": "Tag 2 description",
-})
-
-blog, err := db.Builder[Blog](tx).Create(ctx, fs.Map{
-  "title": "Hello World",
-  "body":  "This is a blog post",
-  "tags": []*schema.Entity{
-    schema.NewEntity(tag1.ID),
-    schema.NewEntity(tag2.ID),
-  },
-})
-
-tx.Commit()
-// tx.Rollback()
-```

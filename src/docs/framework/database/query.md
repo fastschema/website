@@ -4,7 +4,7 @@ The package `db` provides a query builder that allows you to build queries for t
 
 In order to use the query builder, we need a db client. The db client can be created directly from the `entdbadapter` package or using the `fastschema` application.
 
-Refer to the [Database Client](/docs/web-framework/database/#database-client) section for more information about creating a database client.
+Refer to the [Database Client](/docs/framework/database/#database-client) section for more information about creating a database client.
 
 ::: tip `client` parameter
 From now on, we will refer to the `client` parameter as the database client.

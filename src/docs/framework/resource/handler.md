@@ -16,10 +16,12 @@ type Context interface {
 	Local(string, ...any) (val any)
 	Logger() logger.Logger
 	Bind(any) error
+	SetArg(string, string) string
 	Args() map[string]string
-	Arg(string, ...string) string
-	ArgInt(string, ...int) int
-	Payload() (*schema.Entity, error)
+	Arg(name string, defaults ...string) string
+	ArgInt(name string, defaults ...int) int
+	Body() ([]byte, error)
+	Payload() (*entity.Entity, error)
 	Resource() *Resource
 	AuthToken() string
 	Next() error
@@ -27,6 +29,7 @@ type Context interface {
 	Files() ([]*File, error)
 	Redirect(string) error
 	WSClient() WSClient
+	IP() string
 }
 ```
 

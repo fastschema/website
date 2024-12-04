@@ -84,7 +84,7 @@ const Config = config => {
 }
 ```
 
-While the most [configuration properties](/docs/web-framework/application#configuration) can be modified, some properties are specific to the Go runtime and cannot be changed.
+While the most [configuration properties](/docs/framework/application#configuration) can be modified, some properties are specific to the Go runtime and cannot be changed.
 
 For more information on the FastSchema configuration object, refer to the [Typescript definition](https://github.com/fastschema/fastschema/tree/master/plugins/js/)
 
@@ -139,7 +139,7 @@ export interface Field {
 
 ## Add Hooks
 
-FastSchema supports hooks that allow you to execute custom code at various stages of the application lifecycle, referred to as [hooks](/docs/web-framework/hooks/).
+FastSchema supports hooks that allow you to execute custom code at various stages of the application lifecycle, referred to as [hooks](/docs/framework/hooks/).
 
 All hooks are supported in the plugin configuration function. You can add hooks by calling the corresponding method on the configuration object.
 

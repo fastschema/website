@@ -1,10 +1,10 @@
 ---
 prev:
   text: "Application"
-  link: "/docs/web-framework/application"
+  link: "/docs/framework/application"
 next:
   text: "Handler"
-  link: "/docs/web-framework/resource/handler"
+  link: "/docs/framework/resource/handler"
 ---
 
 # Resource

@@ -2,7 +2,7 @@
 
 Relations are a way to connect two schemas. They are used to define how two tables are connected to each other.
 
-Fastschema relations are defined by the `schema.Relation` interface and can be created based on [struct tag relation](/docs/web-framework/database/system-schema.html#custom-with-tag-fs-relation) or custom schema method.
+Fastschema relations are defined by the `schema.Relation` interface and can be created based on [struct tag relation](/docs/framework/database/system-schema.html#custom-with-tag-fs-relation) or custom schema method.
 
 ```go
 type Relation struct {

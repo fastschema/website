@@ -40,18 +40,24 @@ The `fs.Config` struct allows you to configure the following options:
 
 ```go
 type Config struct {
-	Dir               string
-	AppKey            string
-	Port              string
-	BaseURL           string
-	DashURL           string
-	APIBaseName       string
-	DashBaseName      string
-	Logger            logger.Logger
-	DB                db.Client
-	StorageConfig     *StorageConfig
-	HideResourcesInfo bool
-	SystemSchemas     []any // types to build the system schemas
+	Dir               string         `json:"dir"`
+	AppName           string         `json:"app_name"`
+	AppKey            string         `json:"app_key"`
+	Port              string         `json:"port"`
+	BaseURL           string         `json:"base_url"`
+	DashURL           string         `json:"dash_url"`
+	APIBaseName       string         `json:"api_base_name"`
+	DashBaseName      string         `json:"dash_base_name"`
+	Logger            logger.Logger  `json:"-"`
+	LoggerConfig      *logger.Config `json:"logger_config"` // If Logger is set, LoggerConfig will be ignored
+	DB                db.Client      `json:"-"`
+	DBConfig          *db.Config     `json:"db_config"` // If DB is set, DBConfig will be ignored
+	StorageConfig     *StorageConfig `json:"storage_config"`
+	AuthConfig        *AuthConfig    `json:"auth_config"`
+	MailConfig        *MailConfig    `json:"mail_config"`
+	SystemSchemas     []any          `json:"-"` // types to build the system schemas
+	Hooks             *Hooks         `json:"-"`
+	HideResourcesInfo bool           `json:"hide_resources_info"`
 }
 ```
 
@@ -108,7 +114,7 @@ The `Logger` option allows you to specify a custom logger that the FastSchema Ap
 
 If no logger is specified, the FastSchema Application will use the default logger which logs messages to the console and saves them to a log file `data/logs/app.log`.
 
-For more information on how to create a custom logger, see the [Logger](/docs/web-framework/logging/) documentation.
+For more information on how to create a custom logger, see the [Logger](/docs/framework/logging/) documentation.
 
 ### DB
 
@@ -118,7 +124,7 @@ If no database client is specified, the FastSchema Application will use the defa
 
 The default DB client will also looking for the configuration from the environment variables. If there is no environment variable set, it will use a SQLite database.
 
-For more information on how to create a custom database client, see the [Database](/docs/web-framework/database/) documentation.
+For more information on how to create a custom database client, see the [Database](/docs/framework/database/) documentation.
 
 ### StorageConfig
 
@@ -126,7 +132,15 @@ The `StorageConfig` option allows you to specify the configuration for the stora
 
 If no storage configuration is specified, the FastSchema Application will use a local storage system as its default storage system.
 
-For more information on how to create a custom storage system, see the [Storage](/docs/web-framework/storage/) documentation.
+For more information on how to create a custom storage system, see the [Storage](/docs/framework/storage/) documentation.
+
+### AuthConfig
+
+The `AuthConfig` option allows you to specify the configuration for the authentication system that the FastSchema Application should use to authenticate users.
+
+### MailConfig
+
+The `MailConfig` option allows you to specify the configuration for the mail system that the FastSchema Application should use to send emails.
 
 ### HideResourcesInfo
 
@@ -138,7 +152,7 @@ The `SystemSchemas` option allows you to specify the types that the FastSchema A
 
 This accepts a list of any types that you want to use to build the system schemas.
 
-For more information on how to create system schema types, see the [System Schema](/docs/web-framework/database/system-schema) documentation.
+For more information on how to create system schema types, see the [System Schema](/docs/framework/database/system-schema) documentation.
 
 ## Methods
 
@@ -149,6 +163,8 @@ It implements the `fs.App` interface which includes the following methods:
 ```go
 type App interface {
 	Key() string
+	Name() string
+	Config() *Config
 	SchemaBuilder() *schema.Builder
 	DB() db.Client
 	Resources() *ResourcesManager
@@ -158,13 +174,33 @@ type App interface {
 	Roles() []*Role
 	Disk(names ...string) Disk
 	Disks() []Disk
+	GetAuthProvider(name string) AuthProvider
+
+	Mailer(...string) Mailer
+	Mailers() []Mailer
 
 	AddResource(resource *Resource)
 	AddMiddlewares(hooks ...Middleware)
+
 	Hooks() *Hooks
+
 	OnPreResolve(hooks ...Middleware)
 	OnPostResolve(hooks ...Middleware)
-	OnPostDBGet(db.PostDBGet)
+
+	OnPreDBQuery(hooks ...db.PreDBQuery)
+	OnPostDBQuery(hooks ...db.PostDBQuery)
+
+	OnPreDBExec(hooks ...db.PreDBExec)
+	OnPostDBExec(hooks ...db.PostDBExec)
+
+	OnPreDBCreate(hooks ...db.PreDBCreate)
+	OnPostDBCreate(hooks ...db.PostDBCreate)
+
+	OnPreDBUpdate(hooks ...db.PreDBUpdate)
+	OnPostDBUpdate(hooks ...db.PostDBUpdate)
+
+	OnPreDBDelete(hooks ...db.PreDBDelete)
+	OnPostDBDelete(hooks ...db.PostDBDelete)
 }
 ```
 
@@ -192,4 +228,4 @@ app.AddMiddlewares(func(c Context) error {
 
 These methods allow you to add hooks to the FastSchema Application.
 
-For more information on how to use hooks, see the [Hooks](/docs/web-framework/hooks/) documentation.
+For more information on how to use hooks, see the [Hooks](/docs/framework/hooks/) documentation.

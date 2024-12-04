@@ -1,45 +1,20 @@
 # Authentication
 
-FastSchema comes with built-in Role-Based Access Control (RBAC) to manage user access to the all the resources.
+FastSchema uses JWT (JSON Web Token) for authentication. When a user logs in, the server will generate a JWT token and send it back to the client.
 
-## Users
+The client should store the token and send it back to the server in every request.
 
-You can manage the users by going to the Admin Panel and clicking on the **All Users** link under the **Content** menu.
 
-A User should belong to one or many roles. You can assign roles to the user by updating the user details.
-
-## Roles
-
-At the first time you run the FastSchema, it will create three default roles: `admin`, `user`, and `guest`. You can manage the roles by going to the Admin Panel and clicking on the **Roles & Permissions** link under the **Settings** menu.
-
-You can create new roles, assign permissions to the roles, and assign roles to the users.
-
-::: tip Root Role
-A root role is a special role that has all the permissions. By default, the `admin` role is the root role.
-
-You can make any role a root role by enabling the `root` option in the role update page.
-:::
-
-## Permissions
-
-Permissions are the rules that define what a user can do. You can manage the permissions of a role by updating the role details.
-
-::: warning IMPORTANT
-If a user has multiple roles, the permissions of all the roles will be combined.
-:::
-
-<div>
-<img src="/static/images/role-edit.png" alt="FastSchema update Role" style="margin:auto" />
-</div>
-
-## Authentication
+## Public Resources
 
 Every FastSchema resources are protected by authentication except the following types of resources:
 
 - Resource that was marked as `public`: This must be set in the resource registration.
 - Resource that was granted to the `guest` role: By default, the `guest` role has no permissions.
 
-FastSchema uses JWT (JSON Web Token) for authentication. When a user logs in, the server will generate a JWT token and send it back to the client.
+## Login
+
+The client should send the login request to the `/api/user/login` endpoint with the user's login and password.
 
 **Request**
 ::: code-group
@@ -78,6 +53,8 @@ User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Geck
 
 The client should store the token and send it back to the server in every request.
 
+## Token usage
+
 There are two ways to send the token to the server:
 
 - In the `Authorization` header: `Bearer <jwt token>`
@@ -112,8 +89,8 @@ You can enable the third-party authentication by setting the environment variabl
 
 ```go
 type AuthConfig struct {
-	EnabledProviders []string                     `json:"enabled_providers"`
-	Providers        map[string]map[string]string `json:"providers"`
+	EnabledProviders []string       `json:"enabled_providers"`
+	Providers        map[string]Map `json:"providers"`
 }
 ```
 
@@ -121,19 +98,23 @@ type AuthConfig struct {
 
 ```json
 {
-  "enabled_providers": ["github", "google"],
+  "enabled_providers": [
+    "github",
+    "google"
+  ],
   "providers": {
+    "local": {
+      "activation_method": "email",
+      "activation_url": "http://frontend-site.local/activation",
+      "recovery_url": "http://frontend-site.local/recover"
+    },
     "github": {
-      "client_id": "__github_client_id__",
-      "client_secret": "__github_client_secret__"
+      "client_id": "github_client_id",
+      "client_secret": "github_client_secret"
     },
     "google": {
       "client_id": "xxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
-      "client_secret": "__google_client_secret__"
-    },
-    "twitter": {
-      "consumer_key": "twitter_consumer_key",
-      "consumer_secret": "twitter_consumer_secret"
+      "client_secret": "xxx"
     }
   }
 }
