@@ -125,7 +125,7 @@ type Comment struct {
   ID      int    `json:"id"`
   Content string `json:"content"`
   PostID  int    `json:"post_id"`
-  Post    *Post  `json:"post" fs.relation:"{'type':'o2o','schema':'post','field':'comments'}"`
+  Post    *Post  `json:"post" fs.relation:"{'type':'o2m','schema':'post','field':'comments'}"`
 }
 ```
 :::
@@ -133,7 +133,7 @@ type Comment struct {
 In the example above, we use the struct tag `fs.relation` to define the relation between the `Post` and `Comment` schemas:
 
 - `fs.relation:"{'type':'o2m','schema':'comment','field':'post','owner':true}"`
-- `fs.relation:"{'type':'o2o','schema':'post','field':'comments'}`
+- `fs.relation:"{'type':'o2m','schema':'post','field':'comments'}`
 
 The `Post` schema has a `Comments` field, and the `Comment` schema has a `Post` field. The `owner` field is set to `true` in the `Post` schema, which means that the `Post` schema is the owner of the relation and the `Comment` schema must has a foreign key to the `Post` schema (`PostID` field).
 
