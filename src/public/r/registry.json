@@ -1,0 +1,1255 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "fastschema",
+  "homepage": "https://fastschema.com",
+  "items": [
+    {
+      "name": "fscommon",
+      "type": "registry:ui",
+      "title": "FS Common",
+      "description": "Common utilities, icons, and shared components",
+      "files": [
+        {
+          "path": "src/fscommon/alert.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fscommon/button-copy.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fscommon/button-tooltip.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fscommon/dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fscommon/field-code-input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fscommon/icons.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fscommon/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fscommon/link.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fscommon/loading.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fscommon/pop-confirm.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fscommon/schema-view.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fscommon/schema.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fscommon/tab-dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fscommon/use-copy-to-clipboard.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fscommon/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-popover",
+        "dequal",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "alert",
+        "button",
+        "dialog",
+        "field",
+        "input-group",
+        "popover",
+        "tooltip"
+      ]
+    },
+    {
+      "name": "fseditor",
+      "type": "registry:ui",
+      "title": "FS Editor",
+      "description": "Rich text editor based on TipTap",
+      "files": [
+        {
+          "path": "src/fseditor/extensions/image/components/image-edit-actions.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/extensions/image/components/image-edit-info.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/extensions/image/components/image-edit-link.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/extensions/image/components/image-edit-replace.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/extensions/image/components/image-view-block.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/extensions/image/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/hooks/use-editor.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fseditor/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/bubble-menu/link-bubble-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/image/image-edit-block.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/image/image-edit-dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/link/link-edit-block.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/link/link-edit-popover.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/link/link-popover-block.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/measured-container.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/section/five.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/section/four.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/section/one.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/section/three.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/section/two.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/shortcut-key.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/spinner.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/toolbar-button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/components/toolbar-section.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/code-block-lowlight/code-block-lowlight.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/code-block-lowlight/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/color/color.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/color/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/file-handler/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/horizontal-rule/horizontal-rule.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/horizontal-rule/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/image/components/image-actions.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/image/components/image-overlay.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/image/components/image-view-block.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/image/components/resize-handle.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/image/hooks/use-drag-resize.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/image/hooks/use-image-actions.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/image/image.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/image/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/reset-marks-on-enter/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/reset-marks-on-enter/reset-marks-on-enter.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/unset-all-marks/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/extensions/unset-all-marks/unset-all-marks.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/hooks/use-container-size.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/hooks/use-minimal-tiptap.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/hooks/use-theme.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/hooks/use-throttle.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/hooks/use-tiptap-editor.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/minimal-tiptap.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/types.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/minimal-tiptap/utils.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fseditor/toolbar/code-block-bubble-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/toolbar/format-section.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/toolbar/image-toolbar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/toolbar/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fseditor/toolbar/insert-section.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons",
+        "@radix-ui/react-tooltip",
+        "@tiptap/extension-code-block-lowlight",
+        "@tiptap/extension-color",
+        "@tiptap/extension-horizontal-rule",
+        "@tiptap/extension-image",
+        "@tiptap/extension-text-style",
+        "@tiptap/extension-typography",
+        "@tiptap/extensions",
+        "@tiptap/pm",
+        "@tiptap/react",
+        "@tiptap/starter-kit",
+        "class-variance-authority",
+        "lowlight",
+        "lucide-react",
+        "react-medium-image-zoom",
+        "sonner"
+      ],
+      "registryDependencies": [
+        "@fastschema/fsmedia",
+        "button",
+        "command",
+        "dialog",
+        "dropdown-menu",
+        "input",
+        "label",
+        "popover",
+        "separator",
+        "switch",
+        "toggle",
+        "toggle-group",
+        "tooltip"
+      ]
+    },
+    {
+      "name": "fsfilter",
+      "type": "registry:ui",
+      "title": "FS Filter",
+      "description": "Query filter builder UI",
+      "files": [
+        {
+          "path": "src/fsfilter/field-select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsfilter/filter-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsfilter/filter-row.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsfilter/filter-value-input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsfilter/filter.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsfilter/hooks/use-content-filter.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fsfilter/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fsfilter/operator-select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsfilter/value-inputs/boolean-input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsfilter/value-inputs/date-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsfilter/value-inputs/enum-select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsfilter/value-inputs/index.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fsfilter/value-inputs/json-input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsfilter/value-inputs/multi-value-input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsfilter/value-inputs/number-input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsfilter/value-inputs/text-input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "date-fns",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@fastschema/fscommon",
+        "@fastschema/fspage-content-list",
+        "badge",
+        "button",
+        "calendar",
+        "command",
+        "dialog",
+        "input",
+        "label",
+        "popover",
+        "select",
+        "textarea",
+        "tooltip"
+      ]
+    },
+    {
+      "name": "fsform",
+      "type": "registry:ui",
+      "title": "FS Form",
+      "description": "Form components and utilities",
+      "files": [
+        {
+          "path": "src/fsform/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsform/error.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsform/fsform.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@tanstack/react-form",
+        "lucide-react",
+        "zod"
+      ],
+      "registryDependencies": [
+        "@fastschema/fscommon",
+        "button",
+        "dialog",
+        "scroll-area"
+      ]
+    },
+    {
+      "name": "fslayout",
+      "type": "registry:ui",
+      "title": "FS Layout",
+      "description": "Layout components (sidebar, navigation)",
+      "files": [
+        {
+          "path": "src/fslayout/header.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fslayout/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fslayout/layout.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fslayout/menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fslayout/nav-main.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fslayout/nav-secondary.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fslayout/nav-user.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fslayout/sidebar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fslayout/store.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "lucide-react",
+        "zustand"
+      ],
+      "registryDependencies": [
+        "@fastschema/fscommon",
+        "avatar",
+        "badge",
+        "breadcrumb",
+        "button",
+        "collapsible",
+        "dropdown-menu",
+        "separator",
+        "sidebar"
+      ]
+    },
+    {
+      "name": "fsmedia",
+      "type": "registry:ui",
+      "title": "FS Media",
+      "description": "Media library and file management",
+      "files": [
+        {
+          "path": "src/fsmedia/file-details.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsmedia/file-grid.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsmedia/file-list.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsmedia/file-picker-modal.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsmedia/file-toolbar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsmedia/file-upload.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsmedia/hooks/use-file-list.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fsmedia/hooks/use-file-operations.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fsmedia/hooks/use-file-picker-tab.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fsmedia/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsmedia/media-library.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsmedia/pagination.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fsmedia/utils.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "date-fns",
+        "lucide-react",
+        "sonner"
+      ],
+      "registryDependencies": [
+        "@fastschema/fscommon",
+        "button",
+        "input",
+        "scroll-area",
+        "select",
+        "separator",
+        "skeleton",
+        "tabs",
+        "toggle-group"
+      ]
+    },
+    {
+      "name": "fspage-content-form",
+      "type": "registry:ui",
+      "title": "FS Page Content Form",
+      "description": "Content form with field renderers",
+      "files": [
+        {
+          "path": "src/fspage-content-form/context.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-bool.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-color-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-editor.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-enum.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-file/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-file/preview.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-json.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-number.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-password.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-relation.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-string.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-textarea.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-time.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/field-wrapper.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/init.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/registry.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fspage-content-form/fields-v2/validation.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fspage-content-form/form.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-form/types.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fspage-content-form/use-create-content-form.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fspage-content-form/zone.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@tanstack/react-form",
+        "date-fns",
+        "lucide-react",
+        "react-color",
+        "sonner",
+        "zod"
+      ],
+      "registryDependencies": [
+        "@fastschema/fscommon",
+        "@fastschema/fseditor",
+        "@fastschema/fsform",
+        "@fastschema/fsmedia",
+        "@fastschema/fspage-content-list",
+        "badge",
+        "button",
+        "calendar",
+        "checkbox",
+        "field",
+        "input",
+        "input-group",
+        "label",
+        "popover",
+        "select",
+        "switch",
+        "textarea"
+      ]
+    },
+    {
+      "name": "fspage-content-list",
+      "type": "registry:ui",
+      "title": "FS Page Content List",
+      "description": "Content list with table view",
+      "files": [
+        {
+          "path": "src/fspage-content-list/content-list.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-list/hooks/use-content-list-columns.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fspage-content-list/hooks/use-relation-content-columns.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fspage-content-list/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-list/relation-picker-list.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-list/relation-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-content-list/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "@tanstack/react-table",
+        "lucide-react",
+        "sonner"
+      ],
+      "registryDependencies": [
+        "@fastschema/fscommon",
+        "@fastschema/fsfilter",
+        "@fastschema/fstable",
+        "badge",
+        "button",
+        "checkbox"
+      ]
+    },
+    {
+      "name": "fspage-login",
+      "type": "registry:ui",
+      "title": "FS Page Login",
+      "description": "Login page components",
+      "files": [
+        {
+          "path": "src/fspage-login/login.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-login/schema.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "zod"
+      ],
+      "registryDependencies": [
+        "@fastschema/fscommon",
+        "@fastschema/fsform",
+        "card",
+        "field",
+        "input"
+      ]
+    },
+    {
+      "name": "fspage-roles",
+      "type": "registry:ui",
+      "title": "FS Page Roles",
+      "description": "Role and permission management",
+      "files": [
+        {
+          "path": "src/fspage-roles/_components/assigned-permissions.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-roles/_components/assigned-users.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-roles/_components/global-rule-field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-roles/_components/permission-item.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-roles/_components/resource-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-roles/_components/role-fields.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-roles/_components/user-item.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-roles/context.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-roles/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-roles/page-edit-role.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@tanstack/react-form",
+        "lucide-react",
+        "sonner"
+      ],
+      "registryDependencies": [
+        "@fastschema/fscommon",
+        "@fastschema/fspage-content-list",
+        "avatar",
+        "badge",
+        "button",
+        "card",
+        "checkbox",
+        "collapsible",
+        "field",
+        "input",
+        "label",
+        "scroll-area",
+        "switch",
+        "textarea",
+        "tooltip"
+      ]
+    },
+    {
+      "name": "fspage-schema-diagram",
+      "type": "registry:ui",
+      "title": "FS Page Schema Diagram",
+      "description": "ER diagram visualization",
+      "files": [
+        {
+          "path": "src/fspage-schema-diagram/_components/diagram/constants.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fspage-schema-diagram/_components/diagram/dagre-layout.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fspage-schema-diagram/_components/diagram/diagram-panel.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-diagram/_components/diagram/graph-utils.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fspage-schema-diagram/_components/diagram/hooks/use-diagram.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fspage-schema-diagram/_components/diagram/hooks/use-hover-highlight.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fspage-schema-diagram/_components/diagram/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-diagram/_components/diagram/layout-utils.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fspage-schema-diagram/_components/diagram/schema-node.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-diagram/_components/diagram/types.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/fspage-schema-diagram/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-diagram/page.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@tanstack/react-form",
+        "dagre",
+        "html-to-image",
+        "lucide-react",
+        "reactflow",
+        "sonner"
+      ],
+      "registryDependencies": [
+        "@fastschema/fscommon",
+        "@fastschema/fspage-schema-edit",
+        "button",
+        "dropdown-menu"
+      ]
+    },
+    {
+      "name": "fspage-schema-edit",
+      "type": "registry:ui",
+      "title": "FS Page Schema Edit",
+      "description": "Schema editor components",
+      "files": [
+        {
+          "path": "src/fspage-schema-edit/builder/form/dnd.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/builder/form/field-handle.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/builder/form/hooks.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/builder/form/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/builder/form/zone.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/builder/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/builder/list/available-field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/builder/list/field-settings.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/builder/list/hooks.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/builder/list/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/builder/list/selected-field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/common.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/context.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/advance.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/database.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/field-renderer-settings.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/field-type-enum-settings/dnd.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/field-type-enum-settings/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/field-type-enum-settings/item.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/field-type-file-settings.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/field-type-relation-settings/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/field-type-relation-settings/relation-field-input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/field-type-relation-settings/relation-schema-selector.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/field-type-relation-settings/relation-type-selector.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/field-type-selector.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/general.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/hooks.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/field/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/header.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/page.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/settings.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/store.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/view-settings/form-view-selector.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-schema-edit/view-settings/list-view-selector.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@dnd-kit/core",
+        "@dnd-kit/modifiers",
+        "@dnd-kit/sortable",
+        "@dnd-kit/utilities",
+        "@tanstack/react-form",
+        "@tanstack/react-store",
+        "dequal",
+        "lucide-react",
+        "sonner"
+      ],
+      "registryDependencies": [
+        "@fastschema/fscommon",
+        "@fastschema/fsform",
+        "@fastschema/fspage-content-form",
+        "badge",
+        "button",
+        "button-group",
+        "card",
+        "checkbox",
+        "command",
+        "field",
+        "input",
+        "input-group",
+        "item",
+        "label",
+        "popover",
+        "radio-group",
+        "select",
+        "separator",
+        "switch",
+        "tooltip"
+      ]
+    },
+    {
+      "name": "fspage-users",
+      "type": "registry:ui",
+      "title": "FS Page Users",
+      "description": "User management components",
+      "files": [
+        {
+          "path": "src/fspage-users/_components/access-roles.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-users/_components/account-info.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-users/_components/custom-fields.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-users/_components/oauth-provider.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-users/_components/personal-details.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-users/_components/profile-image.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-users/index.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fspage-users/page-edit-user.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@tanstack/react-form",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@fastschema/fspage-content-form",
+        "avatar",
+        "button",
+        "card",
+        "field",
+        "input",
+        "label"
+      ]
+    },
+    {
+      "name": "fstable",
+      "type": "registry:ui",
+      "title": "FS Table",
+      "description": "Table components with sorting and pagination",
+      "files": [
+        {
+          "path": "src/fstable/column-header.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fstable/column-toggle.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fstable/common.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fstable/fstable.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fstable/pagination.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fstable/toolbar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/fstable/use-fstable.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/fstable/view-options.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@tanstack/react-table",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@fastschema/fscommon",
+        "button",
+        "dropdown-menu",
+        "input",
+        "select"
+      ]
+    }
+  ]
+}

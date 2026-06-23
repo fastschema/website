@@ -49,12 +49,12 @@ _The setup token `{token}` is displayed in the terminal._
 
    - Select the latest release.
 
-   - Download the appropriate binary for your operating system (e.g., Linux, macOS, Windows). For example: `fastschema_0.6.2_linux_amd64.zip`
+   - Download the appropriate binary for your operating system (e.g., Linux, macOS, Windows).
 
 2. **Extract the Binary:**
 
    ```bash
-   unzip fastschema_0.6.2_linux_amd64.zip
+   unzip fastschema_*.zip
    ```
 
 3. **Run the Binary:**
@@ -79,19 +79,7 @@ _The setup token `{token}` is displayed in the terminal._
    git submodule update --init --recursive
    ```
 
-2. **Build the Dashboard:** (Optional)
-
-   ```bash
-   cd pkg/dash
-   yarn install && yarn build
-   cd ../../ && mkdir -p private/tmp
-   ```
-
-   ::: warning
-   You need to create an environment file `./pkg/dash/.env.production` for building the dashboard. Refer to `./pkg/dash/.env.example` for more information.
-   :::
-
-3. **Build and run the Binary:**
+2. **Build and run the Binary:**
 
    ```bash
    go build -o fastschema cmd/main.go
@@ -105,13 +93,15 @@ _The setup token `{token}` is displayed in the terminal._
    ```
 
    ::: warning
-   FastSchema requires Go 1.18 or later to build.
+   FastSchema requires Go 1.24 or later to build.
 
-   `make dev` command uses `air` to watch for changes and automatically rebuild the binary
+   `make dev` command uses `air` to watch for changes and automatically rebuild the binary.
 
    You can install `air` by running `go install github.com/cosmtrek/air@latest`.
 
    For more information, refer to the [Air](https://github.com/cosmtrek/air) repository.
+
+   **Note:** The dashboard is built in the separate `fastschema/js` monorepo (`pnpm turbo run build --filter=dash`) and embedded into the core binary. The resulting bundle is available at `./dash/` (via Go `//go:embed`). For end-users, the dashboard is included in the pre-built binary and Docker image.
    :::
 
 ## Setup

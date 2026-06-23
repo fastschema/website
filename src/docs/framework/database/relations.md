@@ -84,15 +84,15 @@ For example, consider a `Student` schema and a `Profile` schema. Each student ha
 ::: code-group
 ```go [System Schema]
 type Student struct {
-	ID      int      `json:"id"`
+	ID      string   `json:"id"`
 	Name    string   `json:"name"`
 	Profile *Profile `json:"profile" fs.relation:"{'type':'o2o','schema':'profile','field':'student','owner':true}"`
 }
 
 type Profile struct {
-	ID        int      `json:"id"`
+	ID        string   `json:"id"`
 	Address   string   `json:"address"`
-	StudentID int      `json:"student_id"`
+	StudentID string   `json:"student_id"`
 	Student   *Student `json:"student" fs.relation:"{'type':'o2o','schema':'student','field':'profile'}"`
 }
 
@@ -116,16 +116,16 @@ For example, consider a `Post` schema and a `Comment` schema. Each post has many
 ::: code-group
 ```go [System Schema]
 type Post struct {
-  ID       int        `json:"id"`
+  ID       string     `json:"id"`
   Title    string     `json:"title"`
   Comments []*Comment `json:"comments" fs.relation:"{'type':'o2m','schema':'comment','field':'post','owner':true}"`
 }
 
 type Comment struct {
-  ID      int    `json:"id"`
-  Content string `json:"content"`
-  PostID  int    `json:"post_id"`
-  Post    *Post  `json:"post" fs.relation:"{'type':'o2m','schema':'post','field':'comments'}"`
+  ID      string   `json:"id"`
+  Content string   `json:"content"`
+  PostID  string   `json:"post_id"`
+  Post    *Post    `json:"post" fs.relation:"{'type':'o2m','schema':'post','field':'comments'}"`
 }
 ```
 :::
@@ -146,14 +146,14 @@ For example, consider a `Post` schema and a `Category` schema. Each post can hav
 ::: code-group
 ```go [System Schema]
 type Post struct {
-  ID         int         `json:"id"`
+  ID         string      `json:"id"`
   Title      string      `json:"title"`
   Categories []*Category `json:"categories" fs.relation:"{'type':'m2m','schema':'category','field':'posts'}"`
 }
 
 type Category struct {
-  ID    int    `json:"id"`
-  Name  string `json:"name"`
+  ID    string  `json:"id"`
+  Name  string  `json:"name"`
   Posts []*Post `json:"posts" fs.relation:"{'type':'m2m','schema':'post','field':'categories'}"`
 }
 ```

@@ -11,7 +11,7 @@ FastSchema SDK can be installed using browser script tags or npm.
 ### Browser
 
 ```html
-<script src="https://unpkg.com/fastschema@latest/dist/fastschema.umd.js"></script>
+<script src="https://unpkg.com/fastschema@latest/dist/index.umd.js"></script>
 <script>
   const fs = new fastschema.FastSchema("http://localhost:8000");
 </script>
@@ -111,7 +111,7 @@ fs.schema("tag").get<Tag>(params);
 
 `params` can be one of the following:
 
-- `id: number | string`: ID of the content
+- `id: string`: ID of the content (UUID string)
 
 - A filter object that represents the following interface:
 
@@ -213,7 +213,7 @@ or use the configuration events:
 
 ```typescript
 schemaTag.on({
-  id?: number;
+  id?: string;
   once?: boolean;
   select?: string;
   filter?: Filter;
@@ -222,7 +222,7 @@ schemaTag.on({
 
 The configuration object can have the following properties:
 
-- `id`: ID of the record
+- `id`: ID of the record (UUID string)
 - `once`: If true, the callback will be called only once
 - `select`: Fields to select, separated by commas. This is useful when you want to select only specific fields to reduce the payload size.
 - `filter`: Filter object, used to filter the records that will trigger the event.

@@ -25,7 +25,7 @@ FastSchema is built using the Go programming language and leverages a number of 
 
 Before you can install FastSchema, you need to have the following prerequisites installed on your system:
 
-- An installation of Go 1.18 or later.
+- An installation of Go 1.24 or later.
 - A tool to edit Go code, such as Visual Studio Code or GoLand.
 - A command-line terminal.
 

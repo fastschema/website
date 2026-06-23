@@ -202,7 +202,7 @@ export type _FsPostDBCreateHook = (
   ctx: FsContext,
   schema: SchemaRawData,
   entity: FsEntity,
-  createdId: number,
+  createdId: string,
 ) => Promise<void> | void;
 
 export type _FsPreDBUpdateHook = (

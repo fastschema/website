@@ -62,6 +62,15 @@ const config = defineConfig({
           ]
         },
         {
+          text: 'Release & Migration',
+          collapsed: false,
+          items: [
+            { text: 'Release Notes', link: '/docs/release-notes' },
+            { text: 'Migration Guide (v0.9.x → v0.10.0)', link: '/docs/migration-0.10' },
+            { text: 'Error Codes Reference', link: '/docs/error-codes' },
+          ],
+        },
+        {
           text: 'Backend',
           link: '/docs/backend/',
           collapsed: false,

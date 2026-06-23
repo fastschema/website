@@ -27,12 +27,12 @@ GET /api/content/?filter={"name":{"$like":"%aaa%"}}&limit=2&page=2
     "last_page": 5,
     "items": [
       {
-        "id": 8,
+        "id": "550e8400-e29b-41d4-a716-446655440008",
         "name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
         "created_at": "2024-05-25T22:39:49Z"
-      }
+      },
       {
-        "id": 7,
+        "id": "550e8400-e29b-41d4-a716-446655440007",
         "name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
         "created_at": "2024-05-25T22:39:49Z"
       }
@@ -77,7 +77,7 @@ GET /api/content/post/?select=id,name,categories.name
 {
   "data": [
     {
-      "id": 1,
+      "id": "550e8400-e29b-41d4-a716-446655440001",
       "name": "Post 01",
       "categories": [
         {
@@ -89,7 +89,7 @@ GET /api/content/post/?select=id,name,categories.name
       ]
     },
     {
-      "id": 2,
+      "id": "550e8400-e29b-41d4-a716-446655440002",
       "name": "Post 02",
       "categories": [
         {
@@ -308,12 +308,12 @@ When filtering `$neq` operation on a `m2m` relation field, the relation is not f
 
 Assume that we have two schemas `post`, `tag` and the `post.tags` field is a `m2m` relation to the `tag.posts` field.
 
-We want to filter the posts that do not have the tag with `id: 10001`.
+We want to filter the posts that do not have the tag with a specific UUID.
 
 ```http
 GET http://localhost:8000/api/content/post?select=id \
 
-&filter={"tags.id":{"$neq":10001}}
+&filter={"tags.id":{"$neq":"550e8400-e29b-41d4-a716-446655440010"}}
 ```
 
 The expected result should return the posts that:
@@ -352,7 +352,7 @@ WHERE `posts`.`id` NOT IN (
   FROM `posts_tags`
   JOIN `tags` AS `t1`
   ON `posts_tags`.`tags` = `t1`.`id`
-  WHERE `id` = 10001
+  WHERE `id` = '550e8400-e29b-41d4-a716-446655440010'
 )
 ORDER BY `id` DESC
 ```

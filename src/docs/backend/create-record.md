@@ -25,24 +25,24 @@ User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Geck
 {
   "name": "Example Post",
   "priority": 1,
-  "category": { "id": 2 },
-  "tags": [{ "id": 2 }, { "id": 3 }]
+  "category": { "id": "550e8400-e29b-41d4-a716-446655440001" },
+  "tags": [{ "id": "550e8400-e29b-41d4-a716-446655440002" }, { "id": "550e8400-e29b-41d4-a716-446655440003" }]
 }
 ```
 
 ```json [Response]
 {
   "data": {
-    "id": 1,
+    "id": "550e8400-e29b-41d4-a716-446655440000",
     "name": "Example Post",
     "priority": 1,
-    "category": { "id": 2, "name": "Category 2" },
+    "category": { "id": "550e8400-e29b-41d4-a716-446655440001", "name": "Category 1" },
     "tags": [
-      { "id": 2, "name": "Tag 2" },
-      { "id": 3, "name": "Tag 3" }
+      { "id": "550e8400-e29b-41d4-a716-446655440002", "name": "Tag 2" },
+      { "id": "550e8400-e29b-41d4-a716-446655440003", "name": "Tag 3" }
     ],
-    "created_at": "2022-01-01T00:00:00.000Z",
-    "updated_at": "2022-01-01T00:00:00.000Z"
+    "created_at": "2024-06-01T00:00:00Z",
+    "updated_at": "2024-06-01T00:00:00Z"
   }
 }
 ```
@@ -51,5 +51,5 @@ User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Geck
 The request body is a JSON object with the schema fields as keys and their values. The values can be simple or complex objects based on the field type. For example:
 - The `name` field is a simple string value.
 - The `priority` field is a simple integer value.
-- The `category` field is a `o2m` relation field and we are going to attach the category with `id: 2` to the post.
-- The `tags` field is a `m2m` relation field and we are going to attach multiple tags with `id: 2` and `id: 3` to the post.
+- The `category` field is a `o2m` relation field and we are going to attach the category with the specified UUID to the post.
+- The `tags` field is a `m2m` relation field and we are going to attach multiple tags with the specified UUIDs to the post.

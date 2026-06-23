@@ -1,153 +1,361 @@
 # Authentication
 
-FastSchema uses JWT (JSON Web Token) for authentication. When a user logs in, the server will generate a JWT token and send it back to the client.
-
-The client should store the token and send it back to the server in every request.
-
+FastSchema uses JWT (JSON Web Token) for authentication. The server generates tokens upon login and returns them to the client. Clients must store and send tokens in every subsequent request.
 
 ## Public Resources
 
-Every FastSchema resources are protected by authentication except the following types of resources:
+Every FastSchema resource is protected by authentication except:
 
-- Resource that was marked as `public`: This must be set in the resource registration.
-- Resource that was granted to the `guest` role: By default, the `guest` role has no permissions.
+- Resources marked as `public` (set in resource registration).
+- Resources granted to the `guest` role (which has no permissions by default).
 
-## Login
+---
 
-The client should send the login request to the `/api/user/login` endpoint with the user's login and password.
+## Authentication Endpoints
 
-**Request**
-::: code-group
+### Local Authentication
 
-```http [Header]
-POST /api/user/login HTTP/1.1
-Accept: */*
-Accept-Encoding: gzip, deflate, br, zstd
-Accept-Language: en;q=0.9,ja;q=0.8
-Cache-Control: max-age=0
-Content-Type: application/json;charset=utf-8
-Host: localhost:8000
-Origin: http://localhost:3000
-Referer: http://localhost:3000/
-User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36
-```
+#### Login (Username/Email + Password)
 
-**Response**
-```json [Body]
+**Request:**
+```http
+POST /api/auth/local/login HTTP/1.1
+Content-Type: application/json
+
 {
   "login": "admin",
-  "password": "123"
+  "password": "your_password"
 }
 ```
 
-:::
-
-```json{3}
-{
-  "data": {
-    "token": "<jwt token>",
-    "expires": "2024-06-24T20:21:10.085177874+07:00"
-  }
-}
-```
-
-The client should store the token and send it back to the server in every request.
-
-## Token usage
-
-There are two ways to send the token to the server:
-
-- In the `Authorization` header: `Bearer <jwt token>`
-- In the `Cookie` header: `token=<jwt token>`
-
-```http{5,9}
-GET /api/user/me HTTP/1.1
-Accept: */*
-Accept-Encoding: gzip, deflate, br, zstd
-Accept-Language: en;q=0.9,ja;q=0.8
-Authorization: Bearer <jwt token>
-Cache-Control: max-age=0
-Connection: keep-alive
-Content-Type: application/json;charset=utf-8
-Cookie: token=<jwt token>
-Host: localhost:8000
-Referer: http://localhost:8000/dash/
-User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36
-```
-
-::: warning IMPORTANT
-The token will be expired after a certain time. The server will return `401 Unauthorized` if the token is expired.
-
-If the `jwt token` is valid, but the user does not have permission to access the resource, the server will return `403 Forbidden`.
-:::
-
-## Auth Provider
-
-Besides the built-in authentication, you can also use the third-party authentication providers such as Google, Facebook, GitHub, etc.
-
-You can enable the third-party authentication by setting the environment variable `AUTH`. The value is the minified JSON string that represents the `AuthConfig` struct.
-
-```go
-type AuthConfig struct {
-	EnabledProviders []string       `json:"enabled_providers"`
-	Providers        map[string]Map `json:"providers"`
-}
-```
-
-**Example**
-
+**Response (Success):**
 ```json
 {
-  "enabled_providers": [
-    "github",
-    "google"
-  ],
-  "providers": {
-    "local": {
-      "activation_method": "email",
-      "activation_url": "http://frontend-site.local/activation",
-      "recovery_url": "http://frontend-site.local/recover"
-    },
-    "github": {
-      "client_id": "github_client_id",
-      "client_secret": "github_client_secret"
-    },
-    "google": {
-      "client_id": "xxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
-      "client_secret": "xxx"
-    }
+  "token": "<access_token_jwt>",
+  "expires": "2024-07-01T20:21:10Z",
+  "refresh_token": "<refresh_token>",
+  "refresh_token_expires": "2024-07-08T20:21:10Z"
+}
+```
+
+- `token`: JWT access token.
+- `expires`: Access token expiration time.
+- `refresh_token`: Present only if `AUTH_ENABLE_REFRESH_TOKEN=true`.
+- `refresh_token_expires`: Present only if refresh tokens enabled.
+
+#### Register
+
+**Request:**
+```http
+POST /api/auth/local/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "login": "newuser",
+  "email": "newuser@example.com",
+  "password": "secure_password"
+}
+```
+
+**Response (Success):**
+```json
+{
+  "message": "Registration successful. Please activate your account."
+}
+```
+
+User account requires activation (via email link) before login.
+
+#### Activate Account
+
+**Request:**
+```http
+POST /api/auth/local/activate HTTP/1.1
+Content-Type: application/json
+
+{
+  "token": "<activation_token_from_email>"
+}
+```
+
+**Response:**
+```json
+{
+  "message": "Account activated successfully"
+}
+```
+
+#### Send Activation Email
+
+**Request:**
+```http
+POST /api/auth/local/activate/send HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@example.com"
+}
+```
+
+**Response:**
+```json
+{
+  "message": "Activation email sent"
+}
+```
+
+#### Password Recovery Request
+
+**Request:**
+```http
+POST /api/auth/local/recover HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@example.com"
+}
+```
+
+**Response:**
+```json
+{
+  "message": "Recovery email sent"
+}
+```
+
+#### Check Recovery Token
+
+**Request:**
+```http
+POST /api/auth/local/recover/check HTTP/1.1
+Content-Type: application/json
+
+{
+  "token": "<recovery_token_from_email>"
+}
+```
+
+**Response:**
+```json
+{
+  "valid": true
+}
+```
+
+#### Reset Password
+
+**Request:**
+```http
+POST /api/auth/local/recover/reset HTTP/1.1
+Content-Type: application/json
+
+{
+  "token": "<recovery_token_from_email>",
+  "password": "new_password"
+}
+```
+
+**Response:**
+```json
+{
+  "message": "Password reset successfully"
+}
+```
+
+---
+
+## Session Management
+
+### Get Current User
+
+**Request:**
+```http
+GET /api/auth/me HTTP/1.1
+Authorization: Bearer <access_token>
+```
+
+**Response:**
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "login": "admin",
+  "email": "admin@example.com",
+  "activated": true,
+  "created_at": "2024-01-01T00:00:00Z",
+  "updated_at": "2024-01-01T00:00:00Z"
+}
+```
+
+### Refresh Access Token
+
+**Request:**
+```http
+POST /api/auth/token/refresh HTTP/1.1
+Content-Type: application/json
+
+{
+  "refresh_token": "<refresh_token>"
+}
+```
+
+**Response:**
+```json
+{
+  "token": "<new_access_token>",
+  "expires": "2024-07-01T20:21:10Z",
+  "refresh_token": "<new_refresh_token>",
+  "refresh_token_expires": "2024-07-08T20:21:10Z"
+}
+```
+
+Required: `AUTH_ENABLE_REFRESH_TOKEN=true`
+
+### Logout
+
+**Request:**
+```http
+POST /api/auth/logout HTTP/1.1
+Authorization: Bearer <access_token>
+```
+
+**Response:**
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
+---
+
+## Passwordless Authentication (OTP)
+
+### Request OTP Code
+
+**Request:**
+```http
+POST /api/auth/otp/request HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@example.com"
+}
+```
+
+**Response:**
+```json
+{
+  "message": "OTP sent to email",
+  "expires_in": 300
+}
+```
+
+- `expires_in`: OTP expiration in seconds.
+
+### Verify OTP Code
+
+**Request:**
+```http
+POST /api/auth/otp/verify HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "code": "123456"
+}
+```
+
+**Response (Success):**
+```json
+{
+  "token": "<access_token>",
+  "expires": "2024-07-01T20:21:10Z",
+  "refresh_token": "<refresh_token>",
+  "refresh_token_expires": "2024-07-08T20:21:10Z"
+}
+```
+
+Required: `AUTH_OTP_ENABLED=true`
+
+---
+
+## Token Usage
+
+Clients must send the access token in every authenticated request. Two methods:
+
+### Method 1: Authorization Header
+
+```http
+GET /api/content/users/550e8400-e29b-41d4-a716-446655440000 HTTP/1.1
+Authorization: Bearer <access_token>
+```
+
+### Method 2: Cookie
+
+```http
+GET /api/content/users/550e8400-e29b-41d4-a716-446655440000 HTTP/1.1
+Cookie: token=<access_token>
+```
+
+---
+
+## Configuration
+
+### Environment Variables
+
+| Variable | Default | Description |
+|---|---|---|
+| `AUTH_ENABLE_REFRESH_TOKEN` | `false` | Enable refresh token support |
+| `AUTH_REFRESH_TOKEN_LIFETIME` | `604800` | Refresh token lifetime in seconds (7 days) |
+| `AUTH_ACCESS_TOKEN_LIFETIME` | `604800` | Access token lifetime in seconds (7 days) or 15 minutes when refresh enabled |
+| `AUTH_OTP_ENABLED` | `false` | Enable OTP passwordless authentication |
+| `AUTH_OTP_LENGTH` | `6` | OTP code length |
+| `AUTH_OTP_EXPIRATION` | `300` | OTP expiration in seconds (5 minutes) |
+| `AUTH_OTP_MAX_ATTEMPTS` | `3` | Max verification attempts before OTP expires |
+
+### Email Templates
+
+Activation and recovery emails are customizable via the `fs.EmailTemplates` configuration. See [Configuration](/docs/configuration) for details.
+
+---
+
+## Error Handling
+
+Authentication errors return structured error responses. See [Error Codes Reference](/docs/error-codes) for details.
+
+Example error response:
+```json
+{
+  "code": "401",
+  "message": "Unauthorized",
+  "data": {
+    "error": "invalid_credentials"
   }
 }
 ```
 
-### Auth Provider endpoints
+---
 
-- `/api/auth/:provider/login`: Redirect to the provider login page.
-- `/api/auth/:provider/callback`: The provider will redirect to this endpoint after the user logs in.
+## Token Expiration
 
-### Custom Auth Provider
+- Access tokens expire after the configured lifetime (default: 7 days).
+- Refresh tokens expire after their configured lifetime (default: 7 days).
+- The server returns `401 Unauthorized` if a token is expired.
+- Use `/api/auth/token/refresh` to obtain a new access token (requires refresh token support enabled).
 
-Only **GitHub** and **Google** are supported at the moment.
-We will add more providers in the future.
+---
 
-If you want to add a custom provider, you can implement the `fs.AuthProvider` interface.
+## Security Notes
 
-```go
-type AuthProvider interface {
-	Name() string
-	Login(Context) (any, error)
-	Callback(Context) (*User, error)
-}
-```
+- Store access tokens securely (in-memory or secure storage, never localStorage for sensitive data).
+- Refresh tokens should be stored securely and sent only with `/api/auth/token/refresh` requests.
+- Always use HTTPS in production.
+- Implement CSRF protections for cookie-based token transmission.
+- Change `APP_KEY` via environment to invalidate all active tokens (security measure).
 
-FastSchema allow registering the `auth provider` maker function. The maker function should return a new instance of the `AuthProvider`.
+---
 
-```go
-package main
+## See Also
 
-import "github.com/fastschema/fastschema/fs"
-
-func main() {
-  fs.RegisterAuthProviderMaker("custom", NewCustomAuthProvider)
-}
-```
+- [Migration Guide: v0.9.x → v0.10.0](/docs/migration-0.10)
+- [Error Codes Reference](/docs/error-codes)
+- [Configuration](/docs/configuration)
