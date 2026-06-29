@@ -71,12 +71,26 @@ For the first time you run FastSchema, the application will generate a random `A
 
 ```go
 type AuthConfig struct {
-	EnabledProviders []string       `json:"enabled_providers"`
-	Providers        map[string]Map `json:"providers"`
+	EnabledProviders []string            `json:"enabled_providers"`
+	Providers        map[string]Map      `json:"providers"`
+	Registration     *RegistrationPolicy `json:"registration"` // opt-in signup policy
+}
+
+// RegistrationPolicy is the opt-in built-in validation applied to self-service
+// signup (local + OAuth). All fields are optional; a nil policy blocks nothing.
+type RegistrationPolicy struct {
+	AllowedEmailDomains []string `json:"allowed_email_domains"` // non-empty = allowlist
+	BlockedEmailDomains []string `json:"blocked_email_domains"` // deny list
+	ReservedUsernames   []string `json:"reserved_usernames"`    // admin, root, system, ...
+	NormalizeEmail      bool     `json:"normalize_email"`       // lowercase domain + IDN punycode
 }
 ```
 
 *The `local` provider is enabled by default.*
+
+The optional `registration` policy validates self-service signups for both local and OAuth providers. It can also be configured with the `AUTH_REG_ALLOWED_DOMAINS`, `AUTH_REG_BLOCKED_DOMAINS`, and `AUTH_REG_RESERVED_USERNAMES` environment variables. See [Registration Policy](/docs/backend/authentication#registration-policy) for details.
+
+The `local` provider also accepts an `email_change_url` key, used as the base for the confirmation link sent when a user changes their email address (defaults to `<base_url>/auth/local/email/confirm`). See [Change Email](/docs/backend/authentication#change-email).
 
 For example, to enable the `github` and `google` providers:
 
@@ -90,7 +104,8 @@ For example, to enable the `github` and `google` providers:
     "local": {
       "activation_method": "email",
       "activation_url": "http://localhost:3001/activation",
-      "recovery_url": "http://localhost:3001/recover"
+      "recovery_url": "http://localhost:3001/recover",
+      "email_change_url": "http://localhost:3001/email/confirm"
     },
     "github": {
       "client_id": "github_client_id",
@@ -104,6 +119,11 @@ For example, to enable the `github` and `google` providers:
       "consumer_key": "twitter_consumer_key",
       "consumer_secret": "twitter_consumer_secret"
     }
+  },
+  "registration": {
+    "allowed_email_domains": ["example.com"],
+    "reserved_usernames": ["admin", "root", "system"],
+    "normalize_email": true
   }
 }
 ```

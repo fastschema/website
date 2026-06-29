@@ -162,6 +162,56 @@ Content-Type: application/json
 }
 ```
 
+#### Change Email
+
+Starts an authenticated email change. The request re-authenticates the caller with the current password, validates the new address (format, [registration policy](#registration-policy), and uniqueness), and creates a single-use pending change. It then sends two emails: a notification to the **current** address and a confirmation link to the **new** address. The account email is **not** changed until the new address is confirmed.
+
+Email change is only available for **local (password) accounts**.
+
+**Request:**
+```http
+POST /api/auth/local/email/change HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+{
+  "new_email": "new@example.com",
+  "current_password": "your_current_password"
+}
+```
+
+**Response:**
+```json
+{
+  "message": "A confirmation link has been sent to your new email address"
+}
+```
+
+#### Confirm Email Change
+
+Confirms a pending email change using the single-use, time-limited (24 hours) token delivered to the new address. On success, the account email is committed to the new value.
+
+**Request:**
+```http
+POST /api/auth/local/email/confirm HTTP/1.1
+Content-Type: application/json
+
+{
+  "token": "<token_from_new_email>"
+}
+```
+
+**Response:**
+```json
+{
+  "message": "Your email address has been updated"
+}
+```
+
+::: tip Confirmation link
+The confirmation link base defaults to `<base_url>/auth/local/email/confirm`. To point it at a custom page (for example, a dashboard route that calls the confirm endpoint), set `email_change_url` in the local provider configuration.
+:::
+
 ---
 
 ## Session Management
@@ -278,6 +328,81 @@ Required: `AUTH_OTP_ENABLED=true`
 
 ---
 
+## Registration Policy
+
+FastSchema can apply an opt-in, built-in validation policy to **self-service signups**. The policy runs on **both** local email/password registration and OAuth/social signup, just before the user row is created. It does **not** apply to admin-created users (content API). By default (no policy configured) nothing is blocked.
+
+The policy supports:
+
+| Field | Description |
+|---|---|
+| `allowed_email_domains` | Allowlist. When non-empty, only emails on these domains may register. |
+| `blocked_email_domains` | Denylist of email domains to reject. |
+| `reserved_usernames` | Usernames that may not be registered (e.g. `admin`, `root`, `system`). |
+| `normalize_email` | Lowercases the email domain and converts IDN domains to punycode. |
+
+### Configure via environment variables
+
+Each variable is a comma-separated list. Setting **any** of them enables the policy with `normalize_email` turned on.
+
+| Variable | Description |
+|---|---|
+| `AUTH_REG_ALLOWED_DOMAINS` | Allowed email domains (allowlist). |
+| `AUTH_REG_BLOCKED_DOMAINS` | Blocked email domains (denylist). |
+| `AUTH_REG_RESERVED_USERNAMES` | Reserved usernames. |
+
+```bash
+AUTH_REG_ALLOWED_DOMAINS=example.com,acme.io
+AUTH_REG_RESERVED_USERNAMES=admin,root,system
+```
+
+### Configure programmatically
+
+When embedding FastSchema as a Go framework, set the policy on `AuthConfig`:
+
+```go
+app, _ := fastschema.New(&fs.Config{
+  AuthConfig: &fs.AuthConfig{
+    Registration: &fs.RegistrationPolicy{
+      AllowedEmailDomains: []string{"example.com"},
+      ReservedUsernames:   []string{"admin", "root"},
+      NormalizeEmail:      true,
+    },
+  },
+})
+```
+
+The built-in policy runs as the **first** `OnPreUserRegister` hook, so any custom hooks you register run afterwards on the already-normalized input.
+
+### Custom signup rules (`OnPreUserRegister`)
+
+For anything beyond the basics above — invite-only gating, blocking disposable-email or free-webmail domains, custom username rules — register an `OnPreUserRegister` hook. The hook fires for both local and OAuth signups, may mutate `Email`/`Username` (for example, to normalize them), and returning an error rejects the registration.
+
+```go
+app.OnPreUserRegister(func(ctx context.Context, in *fs.RegistrationInput) error {
+  // Block a disposable-email domain
+  if strings.HasSuffix(strings.ToLower(in.Email), "@tempmail.example") {
+    return errors.BadRequest("Disposable email addresses are not allowed")
+  }
+  return nil
+})
+```
+
+`RegistrationInput` carries the signup data:
+
+| Field | Type | Description |
+|---|---|---|
+| `Email` | `string` | Signup email (mutable). |
+| `Username` | `string` | Signup username (mutable). |
+| `Provider` | `string` | `local` or the OAuth provider name. |
+| `ProviderID` | `string` | OAuth provider subject id (empty for local). |
+| `Profile` | `map[string]any` | Raw provider profile (OAuth only). |
+| `IsOAuth` | `bool` | `true` for social-login registration. |
+
+See the [Hooks](/docs/framework/hooks/#onpreuserregister) reference for more detail, or [Plugin Configuration](/docs/plugins/configuration#add-hooks) to register the hook from a JS plugin.
+
+---
+
 ## Token Usage
 
 Clients must send the access token in every authenticated request. Two methods:
@@ -311,6 +436,9 @@ Cookie: token=<access_token>
 | `AUTH_OTP_LENGTH` | `6` | OTP code length |
 | `AUTH_OTP_EXPIRATION` | `300` | OTP expiration in seconds (5 minutes) |
 | `AUTH_OTP_MAX_ATTEMPTS` | `3` | Max verification attempts before OTP expires |
+| `AUTH_REG_ALLOWED_DOMAINS` | _(empty)_ | Comma-separated allowlist of email domains for signup (see [Registration Policy](#registration-policy)) |
+| `AUTH_REG_BLOCKED_DOMAINS` | _(empty)_ | Comma-separated denylist of email domains for signup |
+| `AUTH_REG_RESERVED_USERNAMES` | _(empty)_ | Comma-separated list of usernames that cannot be registered |
 
 ### Email Templates
 

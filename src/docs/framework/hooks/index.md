@@ -109,6 +109,63 @@ app.API().Add(fs.Get("hello", func(ctx fs.Context, _ any) (any, error) {
 app.Start()
 ```
 
+## OnPreUserRegister
+
+```go
+type RegistrationInput struct {
+	Email      string         // signup email (mutable)
+	Username   string         // signup username (mutable)
+	Provider   string         // "local" or the OAuth provider name
+	ProviderID string         // OAuth provider subject id (empty for local)
+	Profile    map[string]any // raw provider profile (OAuth only)
+	IsOAuth    bool           // true for social-login registration
+}
+
+type PreUserRegisterHook = func(
+	ctx context.Context,
+	in *RegistrationInput,
+) error
+
+func (a *App) OnPreUserRegister(hooks ...fs.PreUserRegisterHook)
+```
+
+The `OnPreUserRegister` hook is executed just before a **self-service** user is created. It fires for both local (email/password) registration and OAuth/social signup. It does **not** fire for admin-created users.
+
+This is the extension point for custom signup rules such as invite-only gating, or blocking disposable-email / free-webmail domains.
+
+**There are two possible behaviors for the `OnPreUserRegister` hook:**
+
+- `Return nil` to allow the registration to continue.
+- `Return an error` to reject the registration before the user row is created.
+
+The hook receives a pointer to `RegistrationInput` and **may mutate** `Email`/`Username` (for example, to normalize them); the mutated values are applied to the persisted user.
+
+::: tip Built-in registration policy
+The opt-in [Registration Policy](/docs/backend/authentication#registration-policy) (allow/block email domains, reserved usernames, email normalization) runs as the **first** `OnPreUserRegister` hook, so your custom hooks run afterwards on the already-normalized input.
+:::
+
+**Example:**
+
+```go{5-14}
+app, _ := fastschema.New(&fs.Config{
+  SystemSchemas: []any{Tag{}, Blog{}},
+})
+
+app.OnPreUserRegister(func(ctx context.Context, in *fs.RegistrationInput) error {
+  // Invite-only: reject any email that has not been invited
+  if !isInvited(in.Email) {
+    return errors.BadRequest("Registration is invite-only")
+  }
+
+  // Normalize the username
+  in.Username = strings.ToLower(in.Username)
+
+  return nil
+})
+
+app.Start()
+```
+
 ## OnPreDBQuery
 
 ```go{6}

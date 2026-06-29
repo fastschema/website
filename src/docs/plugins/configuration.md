@@ -56,6 +56,8 @@ export interface FsAppConfig {
   OnPreResolve(...hooks: _FsResolveHook[]): void;
   OnPostResolve(...hooks: _FsResolveHook[]): void;
 
+  OnPreUserRegister(...hooks: _FsPreUserRegister[]): void;
+
   OnPreDBQuery(...hooks: _FsPreDBQueryHook[]): void;
   OnPostDBQuery(...hooks: _FsPostDBQueryHook[]): void;
 
@@ -148,6 +150,8 @@ const Config = config => {
   config.OnPreResolve(hookPreResolve);
   config.OnPostResolve(hookPostResolve);
 
+  config.OnPreUserRegister(hookPreUserRegister);
+
   config.OnPreDBQuery(hookPreDBQuery);
   config.OnPostDBQuery(hookPostDBQuery);
 
@@ -169,6 +173,22 @@ const Config = config => {
 
 ```ts
 export type _FsResolveHook = (ctx: FsContext) => Promise<void> | void;
+
+export interface FsRegistrationInput {
+  email: string;
+  username: string;
+  provider: string;
+  provider_id: string;
+  profile?: { [key: string]: any };
+  is_oauth: boolean;
+}
+
+// Runs before a self-service user is created (local + OAuth).
+// Throw to reject registration. Does NOT fire for admin-created users.
+export type _FsPreUserRegister = (
+  ctx: FsContext,
+  input: FsRegistrationInput,
+) => Promise<void> | void;
 
 export type _FsPreDBQueryHook = (
   ctx: FsContext,
@@ -234,4 +254,23 @@ export type _FsPostDBDeleteHook = (
   originalEntities: FsEntity[],
   affected: number,
 ) => Promise<void> | void;
+```
+
+## Pre user register hook
+
+The `OnPreUserRegister` hook runs before a self-service user is created, for both local and OAuth signups. Throw to reject the registration; you may also mutate `input.email` / `input.username` (for example, to normalize them). It does **not** fire for admin-created users.
+
+This is the place to implement custom signup rules such as invite-only gating or blocking disposable-email domains. See the [Registration Policy](/docs/backend/authentication#registration-policy) for the built-in basics (allow/block domains, reserved usernames, email normalization).
+
+```js [plugin.js]
+const hookPreUserRegister = (ctx, input) => {
+  // Block a disposable-email domain
+  if (input.email.toLowerCase().endsWith('@tempmail.example')) {
+    throw new Error('Disposable email addresses are not allowed');
+  }
+};
+
+const Config = config => {
+  config.OnPreUserRegister(hookPreUserRegister);
+}
 ```
