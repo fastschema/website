@@ -403,6 +403,126 @@ See the [Hooks](/docs/framework/hooks/#onpreuserregister) reference for more det
 
 ---
 
+## Social / OAuth Login
+
+Social providers (GitHub, Google, ...) are configured under `AUTH` (`enabled_providers` + per-provider `client_id`/`client_secret`). The dashboard renders a button per enabled provider; the enabled set is exposed by `GET /api/auth/methods` (`{ "providers": [...], "otp": bool }`, names only, never secrets).
+
+Flow (browser):
+
+1. The browser navigates to `GET /api/auth/{provider}/login`. The server signs a short-lived `state` carrier, sets a matching state cookie (CSRF binding), and redirects to the provider.
+2. After consent, the provider redirects to `GET /api/auth/{provider}/callback`. The server verifies the `state` (and the binding cookie), then resolves or creates the user.
+3. **The token is not placed in a cookie by the server.** The callback mints a single-use one-time code and redirects the browser to the dashboard login route with the code in the URL fragment (`/dash/login#code=<one_time_code>`).
+4. The dashboard reads the code and calls `auth().exchange(code)` (`POST /api/auth/exchange`), receiving the token over a direct request and persisting it through the SDK auth store. Where the token lives (cookie, localStorage, ...) is the SDK's concern, not the server's.
+
+Because the token is delivered through the one-time code rather than a server-set cookie, the storage mechanism stays pluggable on the client. The state cookie set in step 1 is a transient CSRF binding (not the token); it is matched on the callback and lapses by its short TTL.
+
+---
+
+## CLI / Native-App Login (RFC 8252)
+
+A command-line tool or native desktop app can sign a user in **without ever handling the user's password or seeing the JWT in the browser**. The user logs in through the normal dash browser page by **any enabled method** (local, social, or OTP), and the resulting credential is delivered to the app's local loopback listener via a single-use one-time code, following the OAuth 2.0 for Native Apps pattern ([RFC 8252](https://datatracker.ietf.org/doc/html/rfc8252)).
+
+This feature is **opt-in and disabled by default**. Enable it with `AUTH_CLI_LOGIN_ENABLED=true`.
+
+### Why a one-time code
+
+The token is minted server-side and stashed behind a short-lived, single-use one-time code. Only the code travels through the browser redirect; the loopback listener then exchanges the code for the token over a direct server-to-server request. The token itself never appears in any browser URL, response, or cookie during this flow. A PKCE (S256) challenge binds the exchange to the process that started it, defeating code interception.
+
+### Flow
+
+1. The native app starts a loopback HTTP listener on `127.0.0.1` (any free port) and generates a PKCE `code_verifier`.
+2. App -> `POST /api/auth/cli/initiate` with the loopback `redirect_uri`, an opaque `correlation` value, and `code_challenge = base64url(sha256(code_verifier))`. The server validates the redirect target and returns a signed `carrier` plus an `authorize_url` (`/dash/login?cli=<carrier>`).
+3. The app opens `authorize_url` in the user's browser. The dash renders the enabled login methods and the user signs in by any of them.
+4. On success the server mints the token, stores it under a one-time code, and `302`-redirects the browser to the loopback `redirect_uri?code=<one_time_code>&state=<correlation>`.
+5. The loopback listener -> `POST /api/auth/exchange` with `{ code, code_verifier }`. The server verifies PKCE, atomically consumes the code (single use), and returns the JWT **exactly once**.
+
+### Initiate
+
+**Request:**
+```http
+POST /api/auth/cli/initiate HTTP/1.1
+Content-Type: application/json
+
+{
+  "redirect_uri": "http://127.0.0.1:54321/callback",
+  "correlation": "a-random-opaque-value",
+  "code_challenge": "BASE64URL_SHA256_OF_VERIFIER"
+}
+```
+
+`code_challenge` is required (PKCE S256): native-app loopback redirects are interceptable by other local processes, so every code is bound to a verifier only the initiating process holds.
+
+**Response:**
+```json
+{
+  "carrier": "<signed-opaque-carrier>",
+  "authorize_url": "/dash/login?cli=<signed-opaque-carrier>"
+}
+```
+
+### Exchange
+
+**Request:**
+```http
+POST /api/auth/exchange HTTP/1.1
+Content-Type: application/json
+
+{
+  "code": "<one_time_code>",
+  "code_verifier": "<original_code_verifier>"
+}
+```
+
+**Response (Success):**
+```json
+{
+  "token": "<access_token>",
+  "expires": "2024-07-01T20:21:10Z",
+  "refresh_token": "<refresh_token>",
+  "refresh_token_expires": "2024-07-08T20:21:10Z"
+}
+```
+
+The code is single-use and short-lived (60 seconds); a second exchange, an expired code, or a mismatched `code_verifier` returns `401`.
+
+### Redirect target rules
+
+`redirect_uri` is strictly validated before any code is issued, so the endpoint can never be used as an open redirector:
+
+- **Loopback hosts** (`127.0.0.1`, `::1`, `localhost`) are always allowed on **any port**, over `http` or `https`. This is the normal case for native apps.
+- **Non-loopback hosts** are allowed **only** over `https` and **only** when listed in `AUTH_CLI_ALLOWED_REDIRECT_HOSTS` (exact host match, no wildcards).
+
+### Configuration
+
+| Variable | Default | Description |
+|---|---|---|
+| `AUTH_CLI_LOGIN_ENABLED` | `false` | Master switch for the feature. When `false`, all `cli` endpoints return `403`. |
+| `AUTH_CLI_ALLOWED_REDIRECT_HOSTS` | _(empty)_ | Comma-separated allowlist of non-loopback https redirect hosts. |
+
+Programmatically (Go framework):
+
+```go
+app, _ := fastschema.New(&fs.Config{
+  AuthConfig: &fs.AuthConfig{
+    CLILogin: &fs.CLILoginConfig{
+      Enabled:              true,
+      AllowedRedirectHosts: []string{"app.example.com"},
+    },
+  },
+})
+```
+
+### Security notes
+
+- Disabled by default; only loopback redirects are accepted unless you explicitly allowlist https hosts.
+- One-time codes are single-use, short-lived (60s), and high-entropy; PKCE S256 (required) binds the exchange to the initiating process.
+- An exchange attempt consumes the code even when the PKCE verifier is wrong (fail-closed: this prevents brute-forcing the verifier on a live code). If an exchange fails, restart the flow.
+- The token never touches the browser in this flow - it is delivered only over the server-to-server exchange.
+- The browser-mediated step is bound to the browser that started it (a per-session state cookie is matched on the provider callback), closing login CSRF / session fixation.
+- The one-time code store is in-process (single instance). For a multi-node deployment behind a load balancer, the exchange must reach the same instance that minted the code; a shared store is a planned follow-up.
+
+---
+
 ## Token Usage
 
 Clients must send the access token in every authenticated request. Two methods:
@@ -439,6 +559,8 @@ Cookie: token=<access_token>
 | `AUTH_REG_ALLOWED_DOMAINS` | _(empty)_ | Comma-separated allowlist of email domains for signup (see [Registration Policy](#registration-policy)) |
 | `AUTH_REG_BLOCKED_DOMAINS` | _(empty)_ | Comma-separated denylist of email domains for signup |
 | `AUTH_REG_RESERVED_USERNAMES` | _(empty)_ | Comma-separated list of usernames that cannot be registered |
+| `AUTH_CLI_LOGIN_ENABLED` | `false` | Enable CLI / native-app login (see [CLI / Native-App Login](#cli-native-app-login-rfc-8252)) |
+| `AUTH_CLI_ALLOWED_REDIRECT_HOSTS` | _(empty)_ | Comma-separated allowlist of extra non-loopback https redirect hosts |
 
 ### Email Templates
 
